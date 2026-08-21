@@ -172,13 +172,8 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
   testing-library 14.
 - **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) and
-  component sizing on a **real `rem` scale** (root font size is the browser default — the old
-  `1rem == 1px` reset hack is gone; media-query breakpoints stay `px`).
-- **Accessibility pass done:** landmarks (`header`/`main`/`footer`), skip link to the main
-  content, visible `:focus-visible` outlines in the primary blue, decorative-image alt text
-  (thumbnails announce the title once via the card link name), "(abre em uma nova aba)"
-  hints on external video links, and a `prefers-reduced-motion` guard on the hover zoom.
-  Screen-reader/WCAG audit still pending (tracked as debt).
+  component sizing unified on `rem` (`1rem == 1px` per the reset convention; media-query
+  breakpoints stay `px`). The root font-size hack is tracked as accessibility debt.
 - Component-level tests for every styled-component primitive + page/data suites + App
   composition smoke test (20 tests, 13 suites), GitHub Actions CI (install → test → coverage
   summary → build → audit gate) on a Node 22 + 24 matrix.
@@ -190,4 +185,4 @@ Deliberately not implemented yet (candidate backlog):
 
 - Detail cards / dedicated video page.
 - GitHub Pages (or similar) deployment of the static bundle via CI.
-- Screen-reader / full WCAG audit (the automated + structural accessibility pass is done).
+- Product-consistency pass on accessibility (semantic HTML, focus states, alt text).

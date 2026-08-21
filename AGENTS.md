@@ -112,9 +112,11 @@ timaoflix/
 
 - No backend, no deployment pipeline — static SPA bundle only (client-side routing needs a
   fallback to `index.html` on static hosts).
-- Accessibility basics are in place (real rem scale, landmarks, skip link, `:focus-visible`,
-  decorative-image alts, reduced-motion guard) but no screen-reader or full WCAG audit has
-  been done yet.
+- Accessibility pass not done (semantic HTML, focus states, alt text are partially improvised).
+- `src/styles/reset.css` pins the root font size with `html, body { font-size: 1px }` (CRA-era
+  hack so that `1rem == 1px`; all component sizing relies on it). It silently ignores the
+  user's browser font-size preference — an accessibility issue to resolve together with the
+  accessibility pass (proper fix: real rem scale + converting every value).
 
 ## Notes
 

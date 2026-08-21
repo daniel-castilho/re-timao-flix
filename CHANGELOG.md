@@ -6,20 +6,6 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
-### Added
-
-- **Deployment readiness reference** (`docs/frontend-deployment-readiness.md`): the
-  frontend-adapted Twelve-Factor subset the project commits to — reproducible build, static
-  artifact, no secrets/env vars, CI quality gates; deploy pipeline (GitHub Pages) tracked as
-  the open factor.
-
-### Fixed
-
-- `.gitignore` hardened to cover every dotenv variant (`*.env`, `.env.*`) with a tracked
-  `.env.example` exception, matching the deployment-readiness hard rule (previously only
-  `.env`/`.env.test` were ignored, leaving Vite's `.env.local`/`.env.production`
-  committable).
-
 ### Security
 
 - **`npm audit` is now at 0 vulnerabilities** — the migration from the EOL Create React App
@@ -29,25 +15,17 @@ All notable changes to this project are documented in this file. The format is b
 
 ### Changed
 
-- **Accessibility pass + real `rem` scale:** the CRA-era `html, body { font-size: 1px }` hack
-  (`1rem == 1px`) was removed — the root font size is now the browser default (16px) and
-  respects the user's preference. Every component value was converted (`value / 16`; hairline
-  borders stay `px`), with no visual change at default settings. Alongside it: skip link
-  ("Pular para o conteúdo") targeting a focusable `<main id="main-content">`, visible
-  `:focus-visible` outlines in `--color-primary-medium` on buttons/links/cards, decorative
-  alt text for video thumbnails (the card link is named by its title, announced once),
-  "(abre em uma nova aba)" screen-reader hints on external links, logo alt simplified to
-  "TimãoFlix", and the card hover zoom wrapped in a `prefers-reduced-motion` guard.
-  Screen-reader/WCAG audit remains tracked as debt.
+- **Sizing unified on `rem`:** the 17 remaining `px` declarations across styled-components
+  (Header, Footer, Button, Logo, VideoCard, VideoSection, Home, NovoVideo) were converted under
+  the established `1rem == 1px` convention (see `html { font-size: 1px }` in `reset.css`) —
+  no visual change. The `@media (max-width: 800px)` breakpoint intentionally stays in `px`
+  (in media queries, `rem` resolves against the browser's initial root font size, not the
+  project's). The root font-size hack itself is now tracked as accessibility debt in
+  `AGENTS.md`.
 - Clean Code pass: video data fields and component props renamed to English
   (`title`, `category`, `thumbnailUrl`); category grouping extracted into the pure helper
   `groupVideosByCategory` (unit-tested) so `Home` is presentation-only; noise comment and a
   duplicated DOM lookup removed.
-
-### Added
-
-- **SkipLinkTimao** component (visually hidden until focused) wired in `App.jsx`.
-- **Coding standards reference** (`docs/coding-standards.md`): day-to-day conventions for
 - **Toolchain migrated from Create React App to Vite:** `react-scripts` 5.0.1 → `vite` 7.3.6 +
   `@vitejs/plugin-react` 5.2; CRA's embedded Jest → `vitest` 3.2.7; `jsdom` 29 test
   environment. React 18 + styled-components 5 code moved over unchanged.
