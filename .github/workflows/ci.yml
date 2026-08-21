@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-build:
+    name: Test & Build (Node 24)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js (from .nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # The lockfile was generated with npm 11.17.0. Lockfile resolution is
+      # npm-version-sensitive (see docs/lessons.md), so pin the exact npm that
+      # produced it to keep `npm ci` deterministic on CI.
+      - name: Pin npm to the lockfile's generator version
+        run: npm install --global npm@11.17.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: CI=true npm test
+
+      - name: Build production bundle
+        run: CI=true npm run build
+
+      # Gate on critical only. The residual high/moderate advisories are all
+      # dev/build tooling inherited from Create React App (EOL) and never reach
+      # the app runtime; see README "Security posture" and AGENTS.md
+      # "Known technical debt". Do NOT use `npm audit fix --force` here — it
+      # replaces react-scripts with a phantom 0.0.0 placeholder (see lessons).
+      - name: Security audit (block critical)
+        run: npm audit --audit-level=critical
