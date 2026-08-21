@@ -10,7 +10,7 @@ test('renders the home heading', () => {
 test('renders one section per category covering every video', () => {
   render(<Home />);
 
-  const categories = [...new Set(videos.map((video) => video.categoria))];
+  const categories = [...new Set(videos.map((video) => video.category))];
   for (const categoria of categories) {
     expect(screen.getByRole('heading', { name: categoria })).toBeInTheDocument();
   }

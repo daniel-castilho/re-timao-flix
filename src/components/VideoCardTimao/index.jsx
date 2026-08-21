@@ -29,8 +29,8 @@ const CardTitle = styled.h3`
 function VideoCardTimao({ video }) {
   return (
     <CardLink href={video.url} target="_blank" rel="noreferrer">
-      <Thumb src={video.thumb} alt={video.titulo} />
-      <CardTitle>{video.titulo}</CardTitle>
+      <Thumb src={video.thumbnailUrl} alt={video.title} />
+      <CardTitle>{video.title}</CardTitle>
     </CardLink>
   );
 }

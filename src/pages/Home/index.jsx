@@ -21,7 +21,7 @@ const Tagline = styled.p`
     padding: 0 40px;
 `;
 
-const categories = [...new Set(videos.map((video) => video.categoria))];
+const categories = [...new Set(videos.map((video) => video.category))];
 
 function Home() {
   return (
@@ -31,11 +31,11 @@ function Home() {
         Os melhores momentos do <HighlightTimao>Timão</HighlightTimao> em um só lugar.
       </Tagline>
 
-      {categories.map((categoria) => (
+      {categories.map((category) => (
         <VideoSectionTimao
-          key={categoria}
-          titulo={categoria}
-          videos={videos.filter((video) => video.categoria === categoria)}
+          key={category}
+          title={category}
+          videos={videos.filter((video) => video.category === category)}
         />
       ))}
     </HomeSection>

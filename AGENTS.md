@@ -108,6 +108,12 @@ timaoflix/
 
 ## Notes
 
+- **Language conventions (i18n-ready):** all code is 100% English — identifiers, props, function
+  names, comments, docs, commits, logs. UI strings and data content (video titles, categories,
+  page copy) stay in **pt-BR**: they are product content for a Brazilian audience. When
+  internationalization arrives, UI strings move to a dedicated layer (`src/i18n/`); until then
+  the separation of code (English) from content (pt-BR) already holds — data lives in
+  `src/data/`, copy in the components.
 - Install scripts are reviewed through npm 11.17's `allowScripts` field in `package.json`
   (maintained with `npm approve-scripts`). The only entry is `esbuild@0.28.2` — vite's postinstall
   binary validator, the only install script in the tree. When an upgrade bumps the pinned

@@ -19,10 +19,10 @@ const Row = styled.ul`
     padding-bottom: 12rem;
 `;
 
-function VideoSectionTimao({ titulo, videos }) {
+function VideoSectionTimao({ title, videos }) {
   return (
     <Section>
-      <SectionTitle>{titulo}</SectionTitle>
+      <SectionTitle>{title}</SectionTitle>
       <Row>
         {videos.map((video) => (
           <li key={video.id}>
