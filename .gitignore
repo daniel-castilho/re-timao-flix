@@ -105,3 +105,6 @@ dist
 
 # Create React App production build output
 build/
+
+# Vite production build output
+dist/

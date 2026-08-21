@@ -3,7 +3,7 @@
 ![Node](https://img.shields.io/badge/Node.js-24-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)
 ![styled-components](https://img.shields.io/badge/styled--components-5-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
-![CRA](https://img.shields.io/badge/Create_React_App-5-09D3AC?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 
 TimãoFlix is a **Netflix-inspired UI study project** built during Alura's **#ImersãoReact**: a
@@ -33,14 +33,16 @@ Portuguese.
 | **Language & Runtime** | ![Node](https://img.shields.io/badge/Node.js-24-339933?style=for-the-badge&logo=node.js&logoColor=white) (npm 11.17.0, pinned via `.nvmrc`) |
 | **UI framework** | ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white) |
 | **Styling** | ![styled-components](https://img.shields.io/badge/styled--components-5-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) + CSS custom properties |
-| **Build tooling** | Create React App 5 (`react-scripts` 5.0.1, webpack 5) |
-| **Testing** | Jest (CRA runner) + Testing Library (`react` 14, `jest-dom` 6, `user-event` 14) |
+| **Build tooling** | ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white) + `@vitejs/plugin-react` |
+| **Testing** | ![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?style=for-the-badge&logo=vitest&logoColor=white) + Testing Library (`react` 14, `jest-dom` 6, `user-event` 14) |
 | **CI** | GitHub Actions (Node 24, npm 11.17.0) |
 
 - **No runtime dependencies beyond React and styled-components** — the app is static and
   dependency-light at runtime.
 - Design tokens are CSS custom properties in `src/styles/settings/colours.css`
   (`--color-primary-medium: #2A7AE4`, `--color-black-dark: #000`, `--color-gray-light: #F5F5F5`).
+- Migrated from Create React App (`react-scripts`, EOL) to Vite — faster dev/build and a clean
+  dependency tree.
 
 ## Architecture
 
@@ -49,27 +51,31 @@ layer:
 
 ```
 timaoflix/
-├── public/                Static CRA shell (index.html, manifest, icons)
+├── index.html            Vite entry — loads /src/index.jsx, meta + manifest links
+├── public/               Static assets served as-is (favicon, manifest, icons)
 └── src/
-    ├── index.js           Entry point — React 18 createRoot, imports global styles
-    ├── App.js             Composes the page: HeaderTimao + FooterTimao
-    ├── components/        styled-components primitives
-    │   ├── ButtonTimao/   Nav CTA button ("Novo vídeo")
-    │   ├── FooterTimao/   Footer with logo + Alura credit
-    │   ├── HeaderTimao/   Top bar with logo + button
+    ├── index.jsx         Entry point — React 18 createRoot, imports global styles
+    ├── App.jsx           Composes the page: HeaderTimao + FooterTimao
+    ├── components/       styled-components primitives
+    │   ├── ButtonTimao/  Nav CTA button ("Novo vídeo")
+    │   ├── FooterTimao/  Footer with logo + Alura credit
+    │   ├── HeaderTimao/  Top bar with logo + button
     │   ├── HighlightTimao  Inline <strong> highlight
-    │   ├── LinkTimao/     Styled anchor
-    │   └── LogoTimao/     Styled <img> logo
+    │   ├── LinkTimao/    Styled anchor
+    │   └── LogoTimao/    Styled <img> logo
     ├── styles/
-    │   ├── reset.css      Meyer reset (global)
+    │   ├── reset.css     Meyer reset (global)
     │   └── settings/colours.css  Design tokens (--color-*)
-    ├── App.test.js        Smoke tests
-    └── setupTests.js      jest-dom matchers
+    ├── App.test.jsx      Smoke tests (Vitest + Testing Library)
+    └── setupTests.js     jest-dom matchers
+├── vite.config.mjs       Vite + Vitest config (react plugin, jsdom environment)
 ```
 
-- `App.js` is pure composition; there are no class components, lifecycle hooks or business
+- `App.jsx` is pure composition; there are no class components, lifecycle hooks or business
   rules.
 - Styling lives in styled-components only; tokens come from `colours.css`.
+- JSX lives in `.jsx` files (Vite/plugin-react transform JSX in `.jsx`; see
+  [docs/lessons.md](docs/lessons.md) for why the files were renamed).
 
 ## Requirements
 
@@ -85,7 +91,7 @@ git clone https://github.com/daniel-castilho/re-timao-flix.git
 cd re-timao-flix
 nvm use            # Node 24 (per .nvmrc)
 npm install
-npm start          # http://localhost:3000
+npm start          # http://localhost:3000 (Vite dev server)
 ```
 
 ## Commands
@@ -94,52 +100,49 @@ npm start          # http://localhost:3000
 | :--- | :--- |
 | Install dependencies | `npm install` |
 | Dev server (port 3000) | `npm start` |
-| Tests (interactive watch) | `npm test` |
-| Tests (one-shot, CI-style) | `CI=true npm test` |
-| Production build | `CI=true npm run build` → outputs to `build/` |
+| Tests (one-shot) | `npm test` |
+| Tests (watch mode) | `npm run test:watch` |
+| Production build | `npm run build` → outputs to `dist/` |
+| Preview the production build | `npm run preview` |
 | Security audit | `npm audit` |
 
 ## Testing
 
-Tests run through the CRA runner (Jest + Testing Library). Run them one-shot in CI-style:
+Tests run with **Vitest** + Testing Library in a jsdom environment (configured in
+`vite.config.mjs`):
 
 ```sh
-CI=true npm test
+npm test             # one-shot, non-interactive (CI-friendly)
+npm run test:watch   # watch mode
 ```
 
-Current coverage is a smoke test (`src/App.test.js`) that renders the app and asserts the header
-CTA ("Novo vídeo") and the Alura credit are present. Add component tests in `src/*.test.js`;
-CRA discovers them automatically. There is no network code, so tests are fully offline and
+Current coverage is a smoke test (`src/App.test.jsx`) that renders the app and asserts the header
+CTA ("Novo vídeo") and the Alura credit are present. Add component tests in `src/*.test.jsx`;
+Vitest discovers them automatically. There is no network code, so tests are fully offline and
 deterministic.
 
 ## Security Posture
 
+- **`npm audit`: 0 vulnerabilities.** The migration from Create React App to Vite removed every
+  advisory (previously 217 → 28, all in CRA's dev/build tooling).
 - **GHSA-3jxr-9vmj-r5cp / CVE-2026-13149** (and the other `brace-expansion` family advisories)
-  are **fixed**: the vulnerable 1.1.x versions were removed from the tree via the toolchain
-  migration.
-- **`npm audit`: 28 vulnerabilities (0 critical, 14 high, 5 moderate, 9 low)** — all in
-  **dev/build tooling** (svgo, postcss, jest, workbox, webpack-dev-server…) inherited from
-  **Create React App, which is end-of-life**. **None reach the app runtime** (`react` and
-  `styled-components` are clean).
-- **CI gate:** `npm audit --audit-level=critical` (blocks regressions to critical, passes today).
-- **Never run `npm audit fix --force`** on this project — it replaces `react-scripts` with a
-  phantom `0.0.0` placeholder that zeroes the audit but breaks the build (see
-  [docs/lessons.md](docs/lessons.md)).
-- The honest path to a true `0` is migrating away from CRA — see [Roadmap](#roadmap).
+  are **fixed** — the vulnerable 1.1.x versions are no longer in the tree.
+- **CI gate:** `npm audit --audit-level=high` (any future high+ advisory fails the build).
+- Never run `npm audit fix --force` — it fabricates a fake zero by replacing toolchains with
+  phantom placeholders (see [docs/lessons.md](docs/lessons.md)).
 
 ## Current State
 
 - Netflix-style header + footer UI composed of styled-components, PT-BR copy.
-- Toolchain migrated to React 18 / react-scripts 5 / testing-library 14 (CRA 2020 → 2022 era).
+- **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
+  testing-library 14.
 - Smoke tests + GitHub Actions CI (install → test → build → audit gate) on Node 24.
-- `npm audit` down from 217 (17 critical) to 28 (0 critical), all residual in EOL CRA tooling.
+- `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
 ## Roadmap
 
 Deliberately not implemented yet (candidate backlog):
 
-- **Migrate from Create React App to Vite** (the only way to a true `npm audit` 0; also faster
-  dev/build). Keep the same React 18 + styled-components code.
 - Expand the UI: video carousel/grid, detail cards, routing (React Router).
 - Component-level tests (per component, not just the App smoke test).
 - GitHub Pages (or similar) deployment of the static bundle via CI.
