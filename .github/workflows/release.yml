@@ -2,13 +2,18 @@ name: Release
 
 # Release Please turns Conventional Commits on master into a release PR
 # ("chore(main): release vX.Y.Z") that bumps package.json and CHANGELOG.md.
-# Merging that PR tags the commit and publishes the GitHub Release; the
-# second job then attaches the audited production bundle to it.
+# Merging that PR tags the commit and publishes the GitHub Release. The same
+# merge push drives this workflow, so when Release Please reports that a
+# release was just created, the second job builds the exact tagged commit
+# through all CI gates and attaches the bundle to it.
+#
+# NOTE: the bundle job cannot hang off the `release: published` event —
+# releases created with the workflow's own GITHUB_TOKEN do not trigger new
+# workflow runs (GitHub's anti-recursion rule). Reacting to the push that
+# merged the release PR keeps everything in one user-initiated run.
 on:
   push:
     branches: [master]
-  release:
-    types: [published]
 
 permissions:
   contents: write
@@ -18,28 +23,32 @@ jobs:
   release-please:
     name: Manage release PR and tags
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - id: release
+        uses: google-github-actions/release-please-action@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  # Runs when a release is actually published (i.e. the release PR was
-  # merged). Builds the exact tagged commit through the same gates as CI and
+  # Runs only on pushes that actually cut a release (i.e. the release PR was
+  # merged). Builds the tagged commit through the same gates as CI and
   # attaches the bundle, so every release carries its immutable artifact.
   attach-bundle:
     name: Attach built bundle to the release
     runs-on: ubuntu-latest
-    if: github.event_name == 'release'
+    needs: release-please
+    if: needs.release-please.outputs.releases_created == 'true'
     permissions:
       contents: write
     steps:
       - name: Checkout the released tag
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ needs.release-please.outputs.tag_name }}
 
       - name: Set up Node.js (from .nvmrc)
         uses: actions/setup-node@v6
@@ -70,12 +79,12 @@ jobs:
 
       - name: Archive the bundle
         run: |
-          tag="${{ github.event.release.tag_name }}"
+          tag="${{ needs.release-please.outputs.tag_name }}"
           zip -r "timaoflix-${tag}.zip" dist
 
       - name: Upload the archive to the release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          tag="${{ github.event.release.tag_name }}"
+          tag="${{ needs.release-please.outputs.tag_name }}"
           gh release upload "$tag" "timaoflix-${tag}.zip" --clobber
