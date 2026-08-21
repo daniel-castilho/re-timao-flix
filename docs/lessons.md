@@ -95,3 +95,17 @@ database (and older lockfile state during the scan), which is broader and lags t
 **Rule:** evaluate by **severity and where the vulnerable package sits** (runtime vs dev/build
 tooling), not by raw counts. Cross-check with `npm audit` locally and `npm ls <pkg>` for the
 chain. Give Dependabot time to re-scan before acting on a count.
+
+---
+
+## npm 11.17 tracks reviewed install scripts in `allowScripts` (2026-08-21)
+
+Installs with npm 11.17 print `npm warn allow-scripts ...` for every dependency that ships
+preinstall/install/postinstall scripts without a review record. The mode is advisory today
+(scripts still run), but a future release will block unreviewed scripts — which would turn CI's
+`npm ci` into a failure mode overnight.
+
+**Rule:** when the warning appears, read the script before approving it (e.g.
+`node_modules/<pkg>/install.js`), then record the decision with `npm approve-scripts <pkg>`
+(writes a version-pinned entry into `package.json`). Re-approve on version bumps — the returning
+warning is the review trigger, not noise to silence with `--no-allow-scripts-pin`.

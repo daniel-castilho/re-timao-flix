@@ -99,6 +99,10 @@ timaoflix/
 
 ## Notes
 
+- Install scripts are reviewed through npm 11.17's `allowScripts` field in `package.json`
+  (maintained with `npm approve-scripts`). The only entry is `esbuild@0.28.2` — vite's postinstall
+  binary validator, the only install script in the tree. When an upgrade bumps the pinned
+  version, review the script and re-run `npm approve-scripts <pkg>`.
 - No environment variables or secrets in this project. If one is ever added, follow `.env`
   hygiene: `.env`/`.env.*` gitignored, tracked `.env.example` template, values never committed.
 - For current project status and pending work, see `README.md` ("Current State" / "Roadmap").

@@ -29,6 +29,9 @@ All notable changes to this project are documented in this file. The format is b
 - `docs/lessons.md` expanded with the Vite migration lessons.
 
 ### Added
+- Supply-chain review of install scripts (npm 11.17 `allowScripts`): `esbuild@0.28.2` approved —
+  vite's postinstall binary validator and the only install script in the tree. Advisory today;
+  a future npm release will block unreviewed install scripts.
 - Test coverage tooling: `@vitest/coverage-v8` (devDependency) with a `test:coverage` script —
   v8 provider over `src/**`, excluding test infrastructure (`setupTests.js`) and the DOM
   bootstrap entry (`index.jsx`). Current suite reports 100% statements/branches/functions/lines.
