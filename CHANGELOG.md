@@ -54,6 +54,9 @@ All notable changes to this project are documented in this file. The format is b
   (decorative borders are now WCAG-non-text-contrast compliant as well).
 - Deep routes no longer 404 on GitHub Pages: the deploy workflow emits a `404.html` copy of the
   SPA entry so refreshes on `/novo-video` or `/video/:id` bootstrap the client router.
+- **Coverage thresholds are now a CI gate** — `npm run test:coverage` enforces v8 floors
+  (≥90% statements/lines, ≥85% branches, ≥75% functions) and CI runs it instead of a plain
+  test pass plus an informational summary.
 - Full keyboard-navigation sweep completed: every interactive element has a visible focus
   indicator and an accessible name; no tabindex misuse.
 - `VideoCardTimao` is now a button that opens the player modal (no more `target="_blank"` cards);

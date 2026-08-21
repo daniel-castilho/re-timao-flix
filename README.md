@@ -199,7 +199,7 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
   real `rem` scale (no root font-size hack; the legacy 1px hack was removed in the a11y pass).
 - Component-level tests for every component + page/data/lib suites + App composition smoke test
   - **axe accessibility checks** (67 tests, 23 suites), GitHub Actions CI (install → test →
-    coverage summary → build → audit gate) on a Node 22 + 24 matrix.
+    enforced coverage floors → build → audit gate) on a Node 22 + 24 matrix.
 - **GitHub Pages deployment** live via `.github/workflows/deploy.yml` (build with
   `base: '/re-timao-flix/'` → SPA fallback `404.html` for deep routes → publish). See
   [docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md).
@@ -209,6 +209,5 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 
 Deliberately not implemented yet (candidate backlog):
 
-- Backend/data layer beyond `localStorage` (multi-device persistence).
-- Coverage thresholds as a CI gate (see
-  [docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md)).
+- Backend/data layer beyond `localStorage` (multi-device persistence; the export/import JSON
+  flow is the current, dependency-free answer).

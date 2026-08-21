@@ -149,13 +149,15 @@ npm run dev          # or: npm run build && npm run preview
 npm run lint           # ESLint 10 (react-hooks rules, no-unused-vars)
 npm run format:check   # Prettier (singleQuote, semi) over the repo
 npm test               # Vitest one-shot
-npm run test:coverage  # informational summary (no thresholds yet)
+npm run test:coverage  # v8 report; enforces the thresholds from vite.config.mjs
 npm run build          # production build (Vite)
 npm audit --audit-level=high   # 0 vulnerabilities today
 ```
 
-CI (`.github/workflows/ci.yml`) runs lint → format:check → test → coverage summary → build →
-audit on the Node 22+24 matrix. Prefer the fast unit loop (`npm test`) during development.
+CI (`.github/workflows/ci.yml`) runs lint → format:check → tests with coverage → build →
+audit on the Node 22+24 matrix. The coverage step is a gate: dropping below the floors
+(≥90% statements/lines, ≥85% branches, ≥75% functions) fails the job. Prefer the fast unit
+loop (`npm test`) during development.
 
 ---
 
