@@ -177,6 +177,9 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
   button, overlay click or Escape. Keyboard focus is fully trapped inside the dialog (Tab and
   Shift+Tab wrap around the player, link and close button) and returns to the trigger element
   when the modal closes.
+- **Video detail page** — every video has a dedicated route (`/video/:id`) with a large player,
+  category badge and YouTube link; reachable from the player modal ("Detalhes"). Unknown ids
+  fall back to the home page. The catalog lookup covers curated and user-added videos.
 - **Video catalog with Netflix-style carousels:** `src/data/videos.js` curates 12 real videos
   grouped into categories; the Home page renders one horizontal carousel per category with
   **prev/next arrow navigation**, hover play overlays and category badges.
@@ -193,11 +196,10 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) with a
   real `rem` scale (no root font-size hack; the legacy 1px hack was removed in the a11y pass).
 - Component-level tests for every component + page/data/lib suites + App composition smoke test
-  - **axe accessibility checks** (54 tests, 21 suites), GitHub Actions CI (install → test →
+  - **axe accessibility checks** (67 tests, 23 suites), GitHub Actions CI (install → test →
     coverage summary → build → audit gate) on a Node 22 + 24 matrix.
-- **GitHub Pages deployment** configured via `.github/workflows/deploy.yml` (build with
-  `base: '/re-timao-flix/'` → upload `dist/` → publish). Live once Pages is enabled with
-  "Source: GitHub Actions" in the repository settings; see
+- **GitHub Pages deployment** live via `.github/workflows/deploy.yml` (build with
+  `base: '/re-timao-flix/'` → SPA fallback `404.html` for deep routes → publish). See
   [docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md).
 - `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
@@ -205,8 +207,6 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 
 Deliberately not implemented yet (candidate backlog):
 
-- Detail cards / dedicated video page.
-- Full keyboard-navigation sweep across every interactive surface (the player modal already
-  traps and restores focus; skip links and focus-visible are in place).
-- Lighten `--color-surface-border` toward 3:1 vs `--color-surface` (decorative borders are
-  exempt from WCAG today, but closing the gap would future-proof new UI).
+- Backend/data layer beyond `localStorage` (multi-device persistence).
+- Coverage thresholds as a CI gate (see
+  [docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md)).

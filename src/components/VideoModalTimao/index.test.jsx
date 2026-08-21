@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import { useState } from 'react';
 import VideoModalTimao from '.';
 
@@ -10,8 +11,13 @@ const video = {
   thumbnailUrl: 'https://img.youtube.com/vi/Bui2mO6AbxA/hqdefault.jpg',
 };
 
+// The dialog footer links to the detail route, so a router is required.
+function renderModal(ui) {
+  return render(<MemoryRouter>{ui}</MemoryRouter>);
+}
+
 test('renders a dialog with an embedded player and the video title', () => {
-  render(<VideoModalTimao video={video} onClose={() => {}} />);
+  renderModal(<VideoModalTimao video={video} onClose={() => {}} />);
 
   expect(screen.getByRole('dialog', { name: video.title })).toBeInTheDocument();
   const frame = screen.getByTitle(`Vídeo: ${video.title}`);
@@ -25,7 +31,7 @@ test('renders a dialog with an embedded player and the video title', () => {
 test('closes the dialog when the close button is clicked', async () => {
   const user = userEvent.setup();
   const onClose = vi.fn();
-  render(<VideoModalTimao video={video} onClose={onClose} />);
+  renderModal(<VideoModalTimao video={video} onClose={onClose} />);
 
   await user.click(screen.getByRole('button', { name: 'Fechar' }));
   expect(onClose).toHaveBeenCalledTimes(1);
@@ -34,7 +40,7 @@ test('closes the dialog when the close button is clicked', async () => {
 test('closes the dialog when Escape is pressed', async () => {
   const user = userEvent.setup();
   const onClose = vi.fn();
-  render(<VideoModalTimao video={video} onClose={onClose} />);
+  renderModal(<VideoModalTimao video={video} onClose={onClose} />);
 
   await user.keyboard('{Escape}');
   expect(onClose).toHaveBeenCalledTimes(1);
@@ -44,7 +50,7 @@ test('closes the dialog when Escape is pressed', async () => {
 // tabbing, and @testing-library/user-event walks the DOM itself, bypassing
 // custom traps (https://github.com/jsdom/jsdom/issues/2102).
 test('moves focus to the close button when it opens', () => {
-  render(<VideoModalTimao video={video} onClose={() => {}} />);
+  renderModal(<VideoModalTimao video={video} onClose={() => {}} />);
 
   expect(screen.getByRole('button', { name: 'Fechar' })).toHaveFocus();
 });
@@ -52,7 +58,7 @@ test('moves focus to the close button when it opens', () => {
 test('wraps forward Tab from the last focusable to the first inside the dialog', () => {
   const backgroundButton = document.createElement('button');
   document.body.appendChild(backgroundButton);
-  render(<VideoModalTimao video={video} onClose={() => {}} />);
+  renderModal(<VideoModalTimao video={video} onClose={() => {}} />);
 
   const frame = screen.getByTitle(`Vídeo: ${video.title}`);
   const closeButton = screen.getByRole('button', { name: 'Fechar' });
@@ -65,7 +71,7 @@ test('wraps forward Tab from the last focusable to the first inside the dialog',
 });
 
 test('wraps Shift+Tab from the first focusable to the last inside the dialog', () => {
-  render(<VideoModalTimao video={video} onClose={() => {}} />);
+  renderModal(<VideoModalTimao video={video} onClose={() => {}} />);
 
   const frame = screen.getByTitle(`Vídeo: ${video.title}`);
   const closeButton = screen.getByRole('button', { name: 'Fechar' });
@@ -89,7 +95,7 @@ test('restores focus to the trigger element when it closes', async () => {
       </>
     );
   }
-  render(<Page />);
+  renderModal(<Page />);
 
   const trigger = screen.getByRole('button', { name: 'Assistir' });
   await user.click(trigger);

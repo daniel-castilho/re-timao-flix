@@ -139,3 +139,16 @@ background + near-black ink (`--color-black-dark` on `--color-primary-light` = 6
 when a colour pairing is introduced or changed (a 20-line Node script over `colours.css` is
 enough; no dependency needed). For bright accent backgrounds, prefer near-black ink over white;
 reserve white text for large/bold-only pairings that actually clear 3:1.
+
+---
+
+## axe-core cannot audit into iframes under jsdom (2026-08-21)
+
+Adding the video detail page put a YouTube `<iframe>` on a directly-axe-tested page. `axe()`
+then failed with `Error: Respondable target must be a frame in the current window`: axe tries to
+`postMessage` into every child frame, and jsdom's frame windows cannot answer. The same iframe
+is harmless in the app — the failure is purely a jsdom/axe interaction.
+
+**Rule:** when a page under axe testing embeds third-party frames, remove them from the test
+container before running axe (`container.querySelector('iframe')?.remove()`). The embedded
+player is outside the app's accessibility contract anyway; audit our own markup only.

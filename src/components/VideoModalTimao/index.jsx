@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router';
 import styled from 'styled-components';
 import { toEmbedUrl } from '../../lib/youtube';
 
@@ -165,6 +166,9 @@ function VideoModalTimao({ video, onClose }) {
         <Footer>
           <Title>{video.title}</Title>
           <Actions>
+            <ExternalLink as={Link} to={`/video/${video.id}`} onClick={onClose}>
+              Detalhes
+            </ExternalLink>
             <ExternalLink href={video.url} target="_blank" rel="noreferrer">
               Abrir no YouTube
             </ExternalLink>

@@ -10,6 +10,7 @@ import LinkTimao from './components/LinkTimao';
 import SkipLinkTimao from './components/SkipLinkTimao';
 import Home from './pages/Home';
 import NovoVideo from './pages/NovoVideo';
+import VideoDetail from './pages/VideoDetail';
 
 const Nav = styled.nav`
   display: flex;
@@ -37,6 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/novo-video" element={<NovoVideo />} />
+          <Route path="/video/:id" element={<VideoDetail />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

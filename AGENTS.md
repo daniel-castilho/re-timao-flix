@@ -73,7 +73,8 @@ timaoflix/
 │   ├── App.jsx           Layout: HeaderTimao + <Routes> (Home, NovoVideo) + FooterTimao
 │   ├── pages/            Route pages (PascalCase folders, index.jsx)
 │   │   ├── Home/         Landing page ("/") — video sections by category
-│   │   └── NovoVideo/    "Novo vídeo" page ("/novo-video")
+│   │   ├── NovoVideo/    "Novo vídeo" page ("/novo-video")
+│   │   └── VideoDetail/  Video detail page ("/video/:id") — big player + metadata
 │   ├── components/       styled-components primitives (PascalCase folders, index.jsx)
 │   │   ├── ButtonTimao/  Nav CTA button ("Novo vídeo")
 │   │   ├── ButtonLinkTimao/  ButtonTimao styles on a react-router Link (withComponent)
@@ -111,16 +112,14 @@ timaoflix/
 
 ## Known technical debt (resolve later; flag, don't silently fix)
 
-- No backend — static SPA bundle only (client-side routing on GitHub Pages serves only `/`;
-  deep-route refreshes 404 on Pages, navigate from the home page or use HashRouter for full
-  robustness).
-- `localStorage` persistence (`timaoflix:userVideos` for user-added videos) has no
-  migration/version key — fine for a study project, worth versioning if the shape evolves.
+- No backend — static SPA bundle only. Deep-route refreshes on GitHub Pages are served by the
+  `404.html` SPA fallback emitted by the deploy workflow; if the app moves to another host,
+  reproduce that fallback there.
 - Accessibility is largely addressed (skip link, focus-visible, reduced-motion, real rem scale,
-  axe checks, a fully trapped and restoring modal dialog); the dark palette passed a WCAG AA
-  contrast audit (badges, CTAs and muted text). One observation stands: decorative card/input
-  borders (`--color-surface-border`) are below 3:1 vs `--color-surface`, which WCAG does not
-  require because text and focus indicators identify the controls.
+  axe checks, a fully trapped and restoring modal dialog, WCAG AA contrast audit including
+  decorative borders at ≥3:1). Known limitation: once keyboard focus enters the YouTube iframe
+  inside the player modal, key events belong to the embedded document — inherent to iframe
+  embeds, acceptable for a study project.
 
 ## Notes
 
@@ -130,6 +129,10 @@ timaoflix/
   internationalization arrives, UI strings move to a dedicated layer (`src/i18n/`); until then
   the separation of code (English) from content (pt-BR) already holds — data lives in
   `src/data/`, copy in the components.
+- User-added videos persist in `localStorage` under a **versioned envelope**
+  (`src/lib/userVideos.js`, `USER_VIDEOS_STORAGE_VERSION`). When the stored shape evolves, bump
+  the version and teach `loadUserVideos` to migrate or discard older ones — never read/write the
+  key directly from components.
 - Install scripts are reviewed through npm 11.17's `allowScripts` field in `package.json`
   (maintained with `npm approve-scripts`). The only entry is `esbuild@0.28.2` — vite's postinstall
   binary validator, the only install script in the tree. When an upgrade bumps the pinned

@@ -2,8 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import videos from '../../data/videos';
 import { extractYouTubeId } from '../../lib/youtube';
-
-const STORAGE_KEY = 'timaoflix:userVideos';
+import { loadUserVideos, saveUserVideos } from '../../lib/userVideos';
 
 const categories = [...new Set(videos.map((video) => video.category))];
 
@@ -132,19 +131,6 @@ const ListCategory = styled.span`
   text-transform: uppercase;
   letter-spacing: 0.04em;
 `;
-
-function loadUserVideos() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveUserVideos(list) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-}
 
 function slugify(text) {
   return text

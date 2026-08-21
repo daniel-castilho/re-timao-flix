@@ -21,6 +21,12 @@ All notable changes to this project are documented in this file. The format is b
 - **Always-dark UI** — the deep-graphite palette is the only theme (no light/dark toggle);
   `colours.css` sets `color-scheme: dark` so native widgets follow, and the palette passed a
   WCAG AA contrast audit (badges, CTA buttons, muted text, error text).
+- **Video detail page** — `/video/:id` with a large embedded player, category badge and
+  YouTube link; reachable from the modal's "Detalhes" link. Unknown ids fall back to Home; the
+  lookup covers curated and user-added videos.
+- **Versioned user-video storage** — `src/lib/userVideos.js` wraps `timaoflix:userVideos` in a
+  `{ version, videos }` envelope (`USER_VIDEOS_STORAGE_VERSION`), migrates the legacy bare-array
+  shape and degrades safely on corrupt/unknown data; unit-tested.
 - **Search** — Home title search (accent/case-insensitive via `src/lib/text.js`) with a
   no-results message.
 - **Rotating hero** — three featured videos (one per category) rotate every 6 s, honouring
@@ -40,13 +46,22 @@ All notable changes to this project are documented in this file. The format is b
   surface on hover (was white on blue, 4.20:1 → 6.62:1).
 - The opt-in light theme and `ThemeToggleTimao`/`useTheme` were removed before release — the UI
   is always dark; the `timaoflix:theme` localStorage key no longer exists.
+- `--color-surface-border` lightened to `#606f81`, clearing 3:1 against every dark surface
+  (decorative borders are now WCAG-non-text-contrast compliant as well).
+- Deep routes no longer 404 on GitHub Pages: the deploy workflow emits a `404.html` copy of the
+  SPA entry so refreshes on `/novo-video` or `/video/:id` bootstrap the client router.
+- Full keyboard-navigation sweep completed: every interactive element has a visible focus
+  indicator and an accessible name; no tabindex misuse.
 - `VideoCardTimao` is now a button that opens the player modal (no more `target="_blank"` cards);
   the external YouTube link moved into the modal footer.
-- Test suite stands at **54 tests across 21 suites** (lib, modal + focus trap, search, hero
-  rotation, axe checks).
-- `AGENTS.md` debt updated: the legacy root font-size hack is removed (resolved); the modal
-  focus-trap debt and the colour-contrast audit are resolved; remaining debt notes
-  `localStorage` persistence, the deep-route 404 on Pages and decorative border contrast.
+- Test suite stands at **67 tests across 23 suites** (lib incl. storage envelope, modal + focus
+  trap, detail page, search, hero rotation, axe checks).
+- Deployment readiness doc refreshed: factors 5–6 are compliant (Deploy workflow live on Pages;
+  rollback = re-run an earlier commit); TODO list reduced to coverage thresholds and release
+  notes.
+- `AGENTS.md` debt updated: resolved — modal focus trap, colour-contrast audit, deep-route 404,
+  unversioned localStorage; remaining debt notes only the iframe keyboard limitation inherent to
+  embedded players.
 
 ### Security
 

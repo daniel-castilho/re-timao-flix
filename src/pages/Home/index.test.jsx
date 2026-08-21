@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import Home from '.';
 import videos from '../../data/videos';
 
@@ -49,7 +50,12 @@ test('shows a no-results message for an unmatched query', async () => {
 
 test('opens the embedded player modal when a card is clicked', async () => {
   const user = userEvent.setup();
-  render(<Home />);
+  // The dialog footer links to the detail route, so a router is required.
+  render(
+    <MemoryRouter>
+      <Home />
+    </MemoryRouter>,
+  );
 
   await user.click(
     screen.getByRole('button', {
