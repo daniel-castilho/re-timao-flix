@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Added
+
+- **Deployment readiness reference** (`docs/frontend-deployment-readiness.md`): the
+  frontend-adapted Twelve-Factor subset the project commits to — reproducible build, static
+  artifact, no secrets/env vars, CI quality gates; deploy pipeline (GitHub Pages) tracked as
+  the open factor.
+
+### Fixed
+
+- `.gitignore` hardened to cover every dotenv variant (`*.env`, `.env.*`) with a tracked
+  `.env.example` exception, matching the deployment-readiness hard rule (previously only
+  `.env`/`.env.test` were ignored, leaving Vite's `.env.local`/`.env.production`
+  committable).
+
 ### Security
 
 - **`npm audit` is now at 0 vulnerabilities** — the migration from the EOL Create React App
