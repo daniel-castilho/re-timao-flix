@@ -1,0 +1,81 @@
+name: Release
+
+# Release Please turns Conventional Commits on master into a release PR
+# ("chore(main): release vX.Y.Z") that bumps package.json and CHANGELOG.md.
+# Merging that PR tags the commit and publishes the GitHub Release; the
+# second job then attaches the audited production bundle to it.
+on:
+  push:
+    branches: [master]
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Manage release PR and tags
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # Runs when a release is actually published (i.e. the release PR was
+  # merged). Builds the exact tagged commit through the same gates as CI and
+  # attaches the bundle, so every release carries its immutable artifact.
+  attach-bundle:
+    name: Attach built bundle to the release
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout the released tag
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Set up Node.js (from .nvmrc)
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Pin npm to the lockfile's generator version
+        run: npm install --global npm@11.17.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Run tests with coverage thresholds
+        run: npm run test:coverage -- --coverage.reporter=text-summary
+
+      - name: Security audit
+        run: npm audit --audit-level=high
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Archive the bundle
+        run: |
+          tag="${{ github.event.release.tag_name }}"
+          zip -r "timaoflix-${tag}.zip" dist
+
+      - name: Upload the archive to the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${{ github.event.release.tag_name }}"
+          gh release upload "$tag" "timaoflix-${tag}.zip" --clobber

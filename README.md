@@ -203,6 +203,14 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **GitHub Pages deployment** live via `.github/workflows/deploy.yml` (build with
   `base: '/re-timao-flix/'` → SPA fallback `404.html` for deep routes → publish). See
   [docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md).
+- **Automated releases** via `.github/workflows/release.yml`
+  ([Release Please](https://github.com/googleapis/release-please)): Conventional Commits on
+  master accumulate in a rotating release PR (`chore(main): release vX.Y.Z`) that bumps
+  `package.json` + `CHANGELOG.md`; merging it tags the commit, publishes the GitHub Release and
+  attaches the production bundle built from the exact tagged commit through all CI gates.
+  Commit messages MUST follow [Conventional Commits](https://www.conventionalcommits.org/)
+  (`feat:`, `fix:`, `ci:`, `docs:`…) — they drive versioning and changelog sections.
+  Rollback = redeploy an earlier tag/commit.
 - `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
 ## Roadmap

@@ -57,6 +57,10 @@ All notable changes to this project are documented in this file. The format is b
 - **Coverage thresholds are now a CI gate** — `npm run test:coverage` enforces v8 floors
   (≥90% statements/lines, ≥85% branches, ≥75% functions) and CI runs it instead of a plain
   test pass plus an informational summary.
+- **Automated releases via Release Please** — `.github/workflows/release.yml` maintains a
+  rotating release PR from Conventional Commits (bumps `package.json` + `CHANGELOG.md`); merging
+  it tags the commit, publishes the GitHub Release and attaches the production bundle built from
+  the tagged commit through all CI gates.
 - Full keyboard-navigation sweep completed: every interactive element has a visible focus
   indicator and an accessible name; no tabindex misuse.
 - `VideoCardTimao` is now a button that opens the player modal (no more `target="_blank"` cards);

@@ -123,6 +123,9 @@ timaoflix/
 
 ## Notes
 
+- **Conventional Commits are mandatory** — `.github/workflows/release.yml` (Release Please)
+  derives versions, tags and CHANGELOG sections from commit messages (`feat:`, `fix:`,
+  `ci:`, `docs:`, `chore:`…). A non-conventional commit silently misses the next release.
 - **Language conventions (i18n-ready):** all code is 100% English — identifiers, props, function
   names, comments, docs, commits, logs. UI strings and data content (video titles, categories,
   page copy) stay in **pt-BR**: they are product content for a Brazilian audience. When
