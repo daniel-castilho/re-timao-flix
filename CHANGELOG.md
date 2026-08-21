@@ -32,6 +32,9 @@ All notable changes to this project are documented in this file. The format is b
 - `docs/lessons.md` expanded with the Vite migration lessons.
 
 ### Added
+- Client-side routing with `react-router` 7 (library mode): Home (`/`) and Novo Vídeo
+  (`/novo-video`) pages plus a catch-all back to Home; the header CTA became a router link
+  (`ButtonLinkTimao`, reusing `ButtonTimao` styles via `withComponent`).
 - Supply-chain review of install scripts (npm 11.17 `allowScripts`): `esbuild@0.28.2` approved —
   vite's postinstall binary validator and the only install script in the tree. Advisory today;
   a future npm release will block unreviewed install scripts.

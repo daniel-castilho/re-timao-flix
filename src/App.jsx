@@ -1,10 +1,13 @@
 import React from 'react';
+import { Routes, Route } from 'react-router';
 import LogoTimao from './components/LogoTimao';
 import HeaderTimao from './components/HeaderTimao';
-import ButtonTimao from './components/ButtonTimao';
+import ButtonLinkTimao from './components/ButtonLinkTimao';
 import FooterTimao from './components/FooterTimao';
 import HighlightTimao from './components/HighlightTimao';
 import LinkTimao from './components/LinkTimao';
+import Home from './pages/Home';
+import NovoVideo from './pages/NovoVideo';
 
 // JSX = (J)ava(S)cript (X)ML
 function App() {
@@ -13,8 +16,16 @@ function App() {
       <HeaderTimao>
         <LogoTimao />
 
-        <ButtonTimao>Novo vídeo</ButtonTimao>
+        <ButtonLinkTimao to="/novo-video">Novo vídeo</ButtonLinkTimao>
       </HeaderTimao>
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/novo-video" element={<NovoVideo />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </main>
 
       <FooterTimao>
         <LogoTimao />

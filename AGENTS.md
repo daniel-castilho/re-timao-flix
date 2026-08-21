@@ -2,8 +2,8 @@
 
 TimãoFlix — a Netflix-inspired UI study project built during Alura's **#ImersãoReact**: a fan
 page for Sport Club Corinthians Paulista ("Timão"). Stack: **React 18**, **styled-components 5**,
-**Vite 7** (`@vitejs/plugin-react`), **Vitest 3** + Testing Library, Node 24 (see `.nvmrc`),
-npm 11.17.0. No backend, no state management, no routing.
+**react-router 7** (library mode), **Vite 7** (`@vitejs/plugin-react`), **Vitest 3** + Testing
+Library, Node 24 (see `.nvmrc`), npm 11.17.0. No backend, no state management.
 
 The **UI copy is Brazilian Portuguese** (product content). All code, identifiers, comments,
 commit messages, documentation and log messages are in **English**.
@@ -64,10 +64,14 @@ timaoflix/
 ├── index.html            Vite entry — loads /src/index.jsx, meta + manifest links
 ├── public/               Static assets served as-is (favicon, manifest, icons)
 ├── src/
-│   ├── index.jsx         Entry point — React 18 createRoot, imports global styles
-│   ├── App.jsx           Composes the page: HeaderTimao + FooterTimao
+│   ├── index.jsx         Entry point — React 18 createRoot + BrowserRouter, global styles
+│   ├── App.jsx           Layout: HeaderTimao + <Routes> (Home, NovoVideo) + FooterTimao
+│   ├── pages/            Route pages (PascalCase folders, index.jsx)
+│   │   ├── Home/         Landing page ("/") — video sections land here
+│   │   └── NovoVideo/    "Novo vídeo" page ("/novo-video")
 │   ├── components/       styled-components primitives (PascalCase folders, index.jsx)
 │   │   ├── ButtonTimao/  Nav CTA button ("Novo vídeo")
+│   │   ├── ButtonLinkTimao/  ButtonTimao styles on a react-router Link (withComponent)
 │   │   ├── FooterTimao/  Footer with logo + Alura credit
 │   │   ├── HeaderTimao/  Top bar with logo + button
 │   │   ├── HighlightTimao  Inline <strong> highlight
@@ -94,7 +98,8 @@ timaoflix/
 
 ## Known technical debt (resolve later; flag, don't silently fix)
 
-- No backend, no routing, no deployment pipeline — static bundle only.
+- No backend, no deployment pipeline — static SPA bundle only (client-side routing needs a
+  fallback to `index.html` on static hosts).
 - Accessibility pass not done (semantic HTML, focus states, alt text are partially improvised).
 
 ## Notes

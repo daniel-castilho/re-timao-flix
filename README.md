@@ -8,8 +8,8 @@
 
 TimãoFlix is a **Netflix-inspired UI study project** built during Alura's **#ImersãoReact**: a
 fan page for Sport Club Corinthians Paulista ("Timão") rendered entirely with **React** and
-**styled-components** — no backend, no state management, no routing. The UI copy is in Brazilian
-Portuguese.
+**styled-components**, with client-side routing — no backend, no state management. The UI copy
+is in Brazilian Portuguese.
 
 **Project docs:** [AGENTS.md](AGENTS.md) (rules for solo/AI-assisted development) ·
 [docs/lessons.md](docs/lessons.md) (engineering lessons) · [CHANGELOG.md](CHANGELOG.md).
@@ -33,6 +33,7 @@ Portuguese.
 | **Language & Runtime** | ![Node](https://img.shields.io/badge/Node.js-24-339933?style=for-the-badge&logo=node.js&logoColor=white) (npm 11.17.0, pinned via `.nvmrc`) |
 | **UI framework** | ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white) |
 | **Styling** | ![styled-components](https://img.shields.io/badge/styled--components-5-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) + CSS custom properties |
+| **Routing** | `react-router` 7 (library mode; v7 is the last generation supporting React 18) |
 | **Build tooling** | ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white) + `@vitejs/plugin-react` |
 | **Testing** | ![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?style=for-the-badge&logo=vitest&logoColor=white) + Testing Library (`react` 14, `jest-dom` 6, `user-event` 14) |
 | **CI** | GitHub Actions (Node 22 + 24 matrix, npm 11.17.0) |
@@ -54,10 +55,14 @@ timaoflix/
 ├── index.html            Vite entry — loads /src/index.jsx, meta + manifest links
 ├── public/               Static assets served as-is (favicon, manifest, icons)
 └── src/
-    ├── index.jsx         Entry point — React 18 createRoot, imports global styles
-    ├── App.jsx           Composes the page: HeaderTimao + FooterTimao
+    ├── index.jsx         Entry point — React 18 createRoot + BrowserRouter, global styles
+    ├── App.jsx           Layout: HeaderTimao + <Routes> (Home, NovoVideo) + FooterTimao
+    ├── pages/            Route pages (PascalCase folders, index.jsx)
+    │   ├── Home/         Landing page ("/") — video sections land here
+    │   └── NovoVideo/    "Novo vídeo" page ("/novo-video")
     ├── components/       styled-components primitives
     │   ├── ButtonTimao/  Nav CTA button ("Novo vídeo")
+    │   ├── ButtonLinkTimao/  ButtonTimao styles on a react-router Link (withComponent)
     │   ├── FooterTimao/  Footer with logo + Alura credit
     │   ├── HeaderTimao/  Top bar with logo + button
     │   ├── HighlightTimao  Inline <strong> highlight
@@ -149,6 +154,8 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 ## Current State
 
 - Netflix-style header + footer UI composed of styled-components, PT-BR copy.
+- **Client-side routing** with `react-router` 7: Home (`/`), Novo Vídeo (`/novo-video`),
+  catch-all back to Home; the header CTA is a router link reusing the button styles.
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
   testing-library 14.
 - Component-level tests for every styled-component primitive + App composition smoke test
@@ -160,6 +167,6 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 
 Deliberately not implemented yet (candidate backlog):
 
-- Expand the UI: video carousel/grid, detail cards, routing (React Router).
+- Expand the UI: video carousel/grid, detail cards.
 - GitHub Pages (or similar) deployment of the static bundle via CI.
 - Product-consistency pass on accessibility (semantic HTML, focus states, alt text).
