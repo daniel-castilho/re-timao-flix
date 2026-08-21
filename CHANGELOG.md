@@ -49,6 +49,12 @@ All notable changes to this project are documented in this file. The format is b
 - **Coding standards reference** (`docs/coding-standards.md`): day-to-day conventions for
   naming, structure, React/Vite, formatting, testing and security; defers to `AGENTS.md` on
   conflicts and is referenced from it ("Sources of truth").
+- **Testing playbook** (`docs/testing-playbook.md`): how to write and interpret tests for this
+  stack — shallow pyramid for a static SPA (data-helper unit → component unit → page/routing →
+  manual browser smoke), mandatory Testing Library patterns (query by role, offline,
+  props-driven fixtures), a map of the current suite (20 tests / 13 files), regression
+  checklists, failure-triage table and local CI-mirror quality gates; referenced from
+  `AGENTS.md` ("Sources of truth").
 - Code style enforcement: ESLint 10 (flat config, `eslint.config.mjs`) + Prettier 3
   (`.prettierrc.json`, single quotes) as devDependencies, with `lint`/`format` scripts and CI
   gates (`npm run lint` + `npm run format:check`) before tests. The vendored Meyer reset is

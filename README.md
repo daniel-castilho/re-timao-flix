@@ -12,7 +12,8 @@ fan page for Sport Club Corinthians Paulista ("Timão") rendered entirely with *
 is in Brazilian Portuguese.
 
 **Project docs:** [AGENTS.md](AGENTS.md) (rules for solo/AI-assisted development) ·
-[docs/lessons.md](docs/lessons.md) (engineering lessons) · [CHANGELOG.md](CHANGELOG.md).
+[docs/lessons.md](docs/lessons.md) (engineering lessons) ·
+[docs/testing-playbook.md](docs/testing-playbook.md) (testing guide) · [CHANGELOG.md](CHANGELOG.md).
 
 ## Table of Contents
 

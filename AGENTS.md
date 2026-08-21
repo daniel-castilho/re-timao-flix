@@ -9,7 +9,7 @@ The **UI copy is Brazilian Portuguese** (product content). All code, identifiers
 commit messages, documentation and log messages are in **English**.
 
 Sources of truth (read in order): `README.md`, `AGENTS.md`, `docs/coding-standards.md`,
-`docs/lessons.md`, `package.json`.
+`docs/testing-playbook.md`, `docs/lessons.md`, `package.json`.
 Re-read the relevant parts before starting any task.
 
 ## Critical rules (never violate)
@@ -29,7 +29,8 @@ Re-read the relevant parts before starting any task.
    `index.test.jsx` next to the component; Vitest auto-discovers them. Suites stay fully
    offline (never assert on the network) and order-independent (no test relies on state left
    behind by another). When a data layer arrives, fixtures go under `src/test/fixtures/` and
-   the global `fetch` is mocked per test.
+   the global `fetch` is mocked per test. Testing conventions and triage live in
+   `docs/testing-playbook.md`.
 6. **JSX lives in `.jsx` files.** Vite's `@vitejs/plugin-react` transforms JSX in `.jsx`, not in
    `.js` — do not rename `.jsx` files back to `.js`, and name new JSX files `.jsx`. Plain JS
    (no JSX) can stay `.js`.
