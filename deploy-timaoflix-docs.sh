@@ -210,7 +210,8 @@ The **UI copy is Brazilian Portuguese** (product content). All code, identifiers
 commit messages, documentation and log messages are in **English**.
 
 Sources of truth (read in order): `README.md`, `AGENTS.md`, `docs/coding-standards.md`,
-`docs/testing-playbook.md`, `docs/lessons.md`, `package.json`.
+`docs/testing-playbook.md`, `docs/frontend-deployment-readiness.md`, `docs/lessons.md`,
+`package.json`.
 Re-read the relevant parts before starting any task.
 
 ## Critical rules (never violate)
@@ -823,15 +824,15 @@ deploys to any static host with no code changes, and can be rolled back to any r
 
 ## The factors and how TimãoFlix complies
 
-| # | Factor | Status | Notes |
-| - | ------- | ------ | ----- |
-| 1 | **Reproducible build** | ✅ Compliant | `package.json` + `package-lock.json` committed. CI pins npm to the lockfile's generator version (npm 11.17.0) — lockfile resolution is npm-version-sensitive (see `docs/lessons.md`). `npm ci` → `npm run build` must pass cleanly anywhere. |
-| 2 | **Static artifact** | ✅ Compliant | `npm run build` emits `dist/` (gitignored, regenerated at build time — never committed). No runtime environment variables, so **the build output is the artifact**: a given commit always produces the same bundle. |
-| 3 | **Config & secrets** | ✅ Compliant | The project has **no secrets and no required env vars**. If an env var is ever added: only `VITE_*`-prefixed variables are exposed to the client; `.env` / `.env.*` stay gitignored; a tracked `.env.example` documents the shape. Never commit real values. |
-| 4 | **CI quality gates** | ✅ Compliant | `.github/workflows/ci.yml` runs on every push to `master` and every PR: `npm ci` → `npm run lint` → `npm run format:check` → `npm test` → coverage summary → `npm run build` → `npm audit --audit-level=high`. A red gate blocks the merge. |
-| 5 | **Deployment pipeline** | ⚠️ **Not implemented** | CI validates but does **not** publish. There is no GitHub Pages / Netlify / Vercel step yet. The target (see Roadmap) is GitHub Pages from `dist/` — the CI job that builds the bundle is ready to become the publish job. |
-| 6 | **Release & rollback** | ⚠️ Partial | Commits are small and conventional; annotated tags mark milestones (`v0.1.0`-style). With a static bundle, **rollback = redeploy a previous commit** — trivial once factor 5 lands, but there is no deployment today to roll back. |
-| 7 | **Logs & observability (dev only)** | ✅ N/A in prod | The app is static: no server-side logging path in production. Dev logs go to stdout (`vite`). When a deploy lands, enable the host's built-in request/asset logs (GitHub Pages offers none; a CDN/host dashboard would cover it). Never log secrets — even in dev. |
+| #   | Factor                              | Status                 | Notes                                                                                                                                                                                                                                                              |
+| --- | ----------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | **Reproducible build**              | ✅ Compliant           | `package.json` + `package-lock.json` committed. CI pins npm to the lockfile's generator version (npm 11.17.0) — lockfile resolution is npm-version-sensitive (see `docs/lessons.md`). `npm ci` → `npm run build` must pass cleanly anywhere.                       |
+| 2   | **Static artifact**                 | ✅ Compliant           | `npm run build` emits `dist/` (gitignored, regenerated at build time — never committed). No runtime environment variables, so **the build output is the artifact**: a given commit always produces the same bundle.                                                |
+| 3   | **Config & secrets**                | ✅ Compliant           | The project has **no secrets and no required env vars**. If an env var is ever added: only `VITE_*`-prefixed variables are exposed to the client; `.env` / `.env.*` stay gitignored; a tracked `.env.example` documents the shape. Never commit real values.       |
+| 4   | **CI quality gates**                | ✅ Compliant           | `.github/workflows/ci.yml` runs on every push to `master` and every PR: `npm ci` → `npm run lint` → `npm run format:check` → `npm test` → coverage summary → `npm run build` → `npm audit --audit-level=high`. A red gate blocks the merge.                        |
+| 5   | **Deployment pipeline**             | ⚠️ **Not implemented** | CI validates but does **not** publish. There is no GitHub Pages / Netlify / Vercel step yet. The target (see Roadmap) is GitHub Pages from `dist/` — the CI job that builds the bundle is ready to become the publish job.                                         |
+| 6   | **Release & rollback**              | ⚠️ Partial             | Commits are small and conventional; annotated tags mark milestones (`v0.1.0`-style). With a static bundle, **rollback = redeploy a previous commit** — trivial once factor 5 lands, but there is no deployment today to roll back.                                 |
+| 7   | **Logs & observability (dev only)** | ✅ N/A in prod         | The app is static: no server-side logging path in production. Dev logs go to stdout (`vite`). When a deploy lands, enable the host's built-in request/asset logs (GitHub Pages offers none; a CDN/host dashboard would cover it). Never log secrets — even in dev. |
 
 ## Hard rules to keep the list green
 
@@ -1077,8 +1078,11 @@ fan page for Sport Club Corinthians Paulista ("Timão") rendered entirely with *
 is in Brazilian Portuguese.
 
 **Project docs:** [AGENTS.md](AGENTS.md) (rules for solo/AI-assisted development) ·
-[docs/lessons.md](docs/lessons.md) (engineering lessons) ·
-[docs/testing-playbook.md](docs/testing-playbook.md) (testing guide) · [CHANGELOG.md](CHANGELOG.md).
+[docs/coding-standards.md](docs/coding-standards.md) (coding standards) ·
+[docs/testing-playbook.md](docs/testing-playbook.md) (testing guide) ·
+[docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md) (deployment
+readiness) · [docs/lessons.md](docs/lessons.md) (engineering lessons) ·
+[CHANGELOG.md](CHANGELOG.md).
 
 ## Table of Contents
 
@@ -1240,8 +1244,12 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
   component sizing unified on `rem` (`1rem == 1px` per the reset convention; media-query
   breakpoints stay `px`). The root font-size hack is tracked as accessibility debt.
 - Component-level tests for every styled-component primitive + page/data suites + App
-  composition smoke test (20 tests, 13 suites), GitHub Actions CI (install → test → coverage
+  composition smoke test (23 tests, 14 suites), GitHub Actions CI (install → test → coverage
   summary → build → audit gate) on a Node 22 + 24 matrix.
+- **GitHub Pages deployment** configured via `.github/workflows/deploy.yml` (build with
+  `base: '/re-timao-flix/'` → upload `dist/` → publish). Live once Pages is enabled with
+  "Source: GitHub Actions" in the repository settings; see
+  [docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md).
 - `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
 ## Roadmap
@@ -1249,7 +1257,6 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 Deliberately not implemented yet (candidate backlog):
 
 - Detail cards / dedicated video page.
-- GitHub Pages (or similar) deployment of the static bundle via CI.
 - Product-consistency pass on accessibility (semantic HTML, focus states, alt text).
 GG_EOF
 

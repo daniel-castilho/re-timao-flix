@@ -12,8 +12,11 @@ fan page for Sport Club Corinthians Paulista ("Timão") rendered entirely with *
 is in Brazilian Portuguese.
 
 **Project docs:** [AGENTS.md](AGENTS.md) (rules for solo/AI-assisted development) ·
-[docs/lessons.md](docs/lessons.md) (engineering lessons) ·
-[docs/testing-playbook.md](docs/testing-playbook.md) (testing guide) · [CHANGELOG.md](CHANGELOG.md).
+[docs/coding-standards.md](docs/coding-standards.md) (coding standards) ·
+[docs/testing-playbook.md](docs/testing-playbook.md) (testing guide) ·
+[docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md) (deployment
+readiness) · [docs/lessons.md](docs/lessons.md) (engineering lessons) ·
+[CHANGELOG.md](CHANGELOG.md).
 
 ## Table of Contents
 
@@ -175,8 +178,12 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
   component sizing unified on `rem` (`1rem == 1px` per the reset convention; media-query
   breakpoints stay `px`). The root font-size hack is tracked as accessibility debt.
 - Component-level tests for every styled-component primitive + page/data suites + App
-  composition smoke test (20 tests, 13 suites), GitHub Actions CI (install → test → coverage
+  composition smoke test (23 tests, 14 suites), GitHub Actions CI (install → test → coverage
   summary → build → audit gate) on a Node 22 + 24 matrix.
+- **GitHub Pages deployment** configured via `.github/workflows/deploy.yml` (build with
+  `base: '/re-timao-flix/'` → upload `dist/` → publish). Live once Pages is enabled with
+  "Source: GitHub Actions" in the repository settings; see
+  [docs/frontend-deployment-readiness.md](docs/frontend-deployment-readiness.md).
 - `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
 ## Roadmap
@@ -184,5 +191,4 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 Deliberately not implemented yet (candidate backlog):
 
 - Detail cards / dedicated video page.
-- GitHub Pages (or similar) deployment of the static bundle via CI.
 - Product-consistency pass on accessibility (semantic HTML, focus states, alt text).

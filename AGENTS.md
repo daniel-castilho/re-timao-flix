@@ -9,7 +9,8 @@ The **UI copy is Brazilian Portuguese** (product content). All code, identifiers
 commit messages, documentation and log messages are in **English**.
 
 Sources of truth (read in order): `README.md`, `AGENTS.md`, `docs/coding-standards.md`,
-`docs/testing-playbook.md`, `docs/lessons.md`, `package.json`.
+`docs/testing-playbook.md`, `docs/frontend-deployment-readiness.md`, `docs/lessons.md`,
+`package.json`.
 Re-read the relevant parts before starting any task.
 
 ## Critical rules (never violate)
