@@ -28,15 +28,15 @@ is in Brazilian Portuguese.
 
 ## Tech Stack
 
-| Category | Technology |
-| :--- | :--- |
-| **Language & Runtime** | ![Node](https://img.shields.io/badge/Node.js-24-339933?style=for-the-badge&logo=node.js&logoColor=white) (npm 11.17.0, pinned via `.nvmrc`) |
-| **UI framework** | ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white) |
-| **Styling** | ![styled-components](https://img.shields.io/badge/styled--components-5-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) + CSS custom properties |
-| **Routing** | `react-router` 7 (library mode; v7 is the last generation supporting React 18) |
-| **Build tooling** | ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white) + `@vitejs/plugin-react` |
-| **Testing** | ![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?style=for-the-badge&logo=vitest&logoColor=white) + Testing Library (`react` 14, `jest-dom` 6, `user-event` 14) |
-| **CI** | GitHub Actions (Node 22 + 24 matrix, npm 11.17.0) |
+| Category               | Technology                                                                                                                                                            |
+| :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Language & Runtime** | ![Node](https://img.shields.io/badge/Node.js-24-339933?style=for-the-badge&logo=node.js&logoColor=white) (npm 11.17.0, pinned via `.nvmrc`)                           |
+| **UI framework**       | ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white)                                                                 |
+| **Styling**            | ![styled-components](https://img.shields.io/badge/styled--components-5-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) + CSS custom properties     |
+| **Routing**            | `react-router` 7 (library mode; v7 is the last generation supporting React 18)                                                                                        |
+| **Build tooling**      | ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white) + `@vitejs/plugin-react`                                            |
+| **Testing**            | ![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?style=for-the-badge&logo=vitest&logoColor=white) + Testing Library (`react` 14, `jest-dom` 6, `user-event` 14) |
+| **CI**                 | GitHub Actions (Node 22 + 24 matrix, npm 11.17.0)                                                                                                                     |
 
 - **No runtime dependencies beyond React and styled-components** — the app is static and
   dependency-light at runtime.
@@ -106,16 +106,18 @@ npm start          # http://localhost:3000 (Vite dev server)
 
 ## Commands
 
-| Purpose | Command |
-| :--- | :--- |
-| Install dependencies | `npm install` |
-| Dev server (port 3000) | `npm start` |
+| Purpose                      | Command                              |
+| :--------------------------- | :----------------------------------- |
+| Install dependencies         | `npm install`                        |
+| Dev server (port 3000)       | `npm start`                          |
 | Tests (one-shot) | `npm test` |
 | Tests (watch mode) | `npm run test:watch` |
 | Test coverage (v8 report) | `npm run test:coverage` |
-| Production build | `npm run build` → outputs to `dist/` |
-| Preview the production build | `npm run preview` |
-| Security audit | `npm audit` |
+| Lint source | `npm run lint` |
+| Check formatting | `npm run format:check` |
+| Production build             | `npm run build` → outputs to `dist/` |
+| Preview the production build | `npm run preview`                    |
+| Security audit               | `npm audit`                          |
 
 ## Testing
 
@@ -131,9 +133,9 @@ npm run test:coverage  # v8 coverage report
 Current total: **10 tests across 7 suites**, all offline and deterministic (the app has no
 network code):
 
-| File | Scope |
-| :--- | :--- |
-| `src/App.test.jsx` | Composition smoke test — header CTA ("Novo vídeo") + Alura credit. |
+| File                              | Scope                                                                                                             |
+| :-------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
+| `src/App.test.jsx`                | Composition smoke test — header CTA ("Novo vídeo") + Alura credit.                                                |
 | `src/components/*/index.test.jsx` | Per-component suites: correct DOM element, content/props forwarding, `LogoTimao` attrs (alt text, bundled asset). |
 
 Testing conventions (adopted from the sibling project's discipline):

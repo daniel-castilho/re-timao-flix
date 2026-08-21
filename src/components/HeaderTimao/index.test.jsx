@@ -5,7 +5,7 @@ test('renders a header element wrapping its content', () => {
   render(
     <HeaderTimao>
       <span>TimãoFlix</span>
-    </HeaderTimao>
+    </HeaderTimao>,
   );
   expect(screen.getByText('TimãoFlix').closest('header')).toBeInTheDocument();
 });

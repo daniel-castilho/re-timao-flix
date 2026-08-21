@@ -7,12 +7,14 @@ All notable changes to this project are documented in this file. The format is b
 ## [Unreleased]
 
 ### Security
+
 - **`npm audit` is now at 0 vulnerabilities** — the migration from the EOL Create React App
   toolchain to Vite removed the entire vulnerable CRA tree (previously 217 → 28, all in
   dev/build tooling). GHSA-3jxr-9vmj-r5cp / CVE-2026-13149 (`brace-expansion`) and the rest of
   the family are fully out of the tree.
 
 ### Changed
+
 - Clean Code pass: video data fields and component props renamed to English
   (`title`, `category`, `thumbnailUrl`); category grouping extracted into the pure helper
   `groupVideosByCategory` (unit-tested) so `Home` is presentation-only; noise comment and a
@@ -36,6 +38,12 @@ All notable changes to this project are documented in this file. The format is b
 - `docs/lessons.md` expanded with the Vite migration lessons.
 
 ### Added
+
+- Code style enforcement: ESLint 10 (flat config, `eslint.config.mjs`) + Prettier 3
+  (`.prettierrc.json`, single quotes) as devDependencies, with `lint`/`format` scripts and CI
+  gates (`npm run lint` + `npm run format:check`) before tests. The vendored Meyer reset is
+  excluded via `.prettierignore`.
+
 - Video catalog with Netflix-style carousels: `src/data/videos.js` curates 12 real videos
   (official channels and documented productions, PT-BR copy) grouped by category; the Home page
   renders one horizontal carousel per category via `VideoSectionTimao` + `VideoCardTimao`

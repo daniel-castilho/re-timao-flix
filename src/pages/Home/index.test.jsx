@@ -4,7 +4,9 @@ import videos from '../../data/videos';
 
 test('renders the home heading', () => {
   render(<Home />);
-  expect(screen.getByRole('heading', { name: 'TimãoFlix' })).toBeInTheDocument();
+  expect(
+    screen.getByRole('heading', { name: 'TimãoFlix' }),
+  ).toBeInTheDocument();
 });
 
 test('renders one section per category covering every video', () => {
@@ -12,7 +14,9 @@ test('renders one section per category covering every video', () => {
 
   const categories = [...new Set(videos.map((video) => video.category))];
   for (const categoria of categories) {
-    expect(screen.getByRole('heading', { name: categoria })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: categoria }),
+    ).toBeInTheDocument();
   }
 
   expect(screen.getAllByRole('img')).toHaveLength(videos.length);

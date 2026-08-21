@@ -11,10 +11,12 @@ test('groups the catalog by category preserving first-appearance order', () => {
 });
 
 test('places every video in exactly one group', () => {
-  const grouped = groupVideosByCategory(videos).flatMap((group) => group.videos);
+  const grouped = groupVideosByCategory(videos).flatMap(
+    (group) => group.videos,
+  );
 
   expect(grouped).toHaveLength(videos.length);
   expect(new Set(grouped.map((video) => video.id))).toEqual(
-    new Set(videos.map((video) => video.id))
+    new Set(videos.map((video) => video.id)),
   );
 });

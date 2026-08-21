@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router';
 import App from './App.jsx';
 
 import './styles/settings/colours.css';
-import './styles/reset.css'
+import './styles/reset.css';
 
 const rootElement = document.getElementById('root');
 
@@ -13,5 +13,5 @@ createRoot(rootElement).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

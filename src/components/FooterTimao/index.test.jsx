@@ -5,7 +5,7 @@ test('renders a footer element wrapping its content', () => {
   render(
     <FooterTimao>
       <span>Feito na #ImersãoReact da Alura</span>
-    </FooterTimao>
+    </FooterTimao>,
   );
   expect(screen.getByText(/Alura/).closest('footer')).toBeInTheDocument();
 });

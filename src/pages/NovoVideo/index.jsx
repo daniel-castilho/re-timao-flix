@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import HighlightTimao from '../../components/HighlightTimao';
 
 const NovoVideoSection = styled.section`
-    flex: 1;
-    padding: 40px;
-    background-color: var(--color-black-dark);
-    color: var(--color-gray-light);
+  flex: 1;
+  padding: 40px;
+  background-color: var(--color-black-dark);
+  color: var(--color-gray-light);
 `;
 
 const Title = styled.h1`
-    font-size: 32rem;
-    margin-bottom: 12rem;
+  font-size: 32rem;
+  margin-bottom: 12rem;
 `;
 
 function NovoVideo() {

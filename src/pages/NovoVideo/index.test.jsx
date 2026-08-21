@@ -3,5 +3,7 @@ import NovoVideo from '.';
 
 test('renders the new video heading', () => {
   render(<NovoVideo />);
-  expect(screen.getByRole('heading', { name: 'Novo vídeo' })).toBeInTheDocument();
+  expect(
+    screen.getByRole('heading', { name: 'Novo vídeo' }),
+  ).toBeInTheDocument();
 });

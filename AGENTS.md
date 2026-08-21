@@ -44,16 +44,18 @@ Re-read the relevant parts before starting any task.
 
 ## Commands
 
-| Purpose | Command |
-| :--- | :--- |
-| Install dependencies | `npm install` |
-| Dev server (port 3000) | `npm start` |
-| Tests (one-shot, CI-style) | `npm test` |
-| Tests (watch mode) | `npm run test:watch` |
+| Purpose                      | Command                 |
+| :--------------------------- | :---------------------- |
+| Install dependencies         | `npm install`           |
+| Dev server (port 3000)       | `npm start`             |
+| Tests (one-shot, CI-style)   | `npm test`              |
+| Tests (watch mode)           | `npm run test:watch`    |
 | Test coverage (v8 report) | `npm run test:coverage` |
+| Lint source | `npm run lint` |
+| Check formatting | `npm run format:check` |
 | Production build (`dist/`) | `npm run build` |
-| Preview the production build | `npm run preview` |
-| Security audit | `npm audit` |
+| Preview the production build | `npm run preview`       |
+| Security audit               | `npm audit`             |
 
 > `npm test` is `vitest run` (non-interactive). `dist/` is gitignored (Vite output).
 
@@ -89,6 +91,10 @@ timaoflix/
 │   └── setupTests.js     jest-dom matchers
 └── vite.config.mjs       Vite + Vitest config (react plugin; jsdom, globals, setupFiles)
 ```
+
+- `eslint.config.mjs` (flat config, ESLint 10) and `.prettierrc.json` enforce code style; CI
+  runs `npm run lint` + `npm run format:check` before tests. The vendored Meyer reset is
+  excluded from formatting via `.prettierignore`.
 
 - `App.jsx` is pure composition of styled-components; there are no class components, lifecycle
   hooks or business rules — keep it that way.
