@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import VideoModalTimao from '.';
 
 const video = {
@@ -37,4 +38,65 @@ test('closes the dialog when Escape is pressed', async () => {
 
   await user.keyboard('{Escape}');
   expect(onClose).toHaveBeenCalledTimes(1);
+});
+
+// Tab navigation is asserted with raw keydown events: jsdom does not implement
+// tabbing, and @testing-library/user-event walks the DOM itself, bypassing
+// custom traps (https://github.com/jsdom/jsdom/issues/2102).
+test('moves focus to the close button when it opens', () => {
+  render(<VideoModalTimao video={video} onClose={() => {}} />);
+
+  expect(screen.getByRole('button', { name: 'Fechar' })).toHaveFocus();
+});
+
+test('wraps forward Tab from the last focusable to the first inside the dialog', () => {
+  const backgroundButton = document.createElement('button');
+  document.body.appendChild(backgroundButton);
+  render(<VideoModalTimao video={video} onClose={() => {}} />);
+
+  const frame = screen.getByTitle(`Vídeo: ${video.title}`);
+  const closeButton = screen.getByRole('button', { name: 'Fechar' });
+  fireEvent.keyDown(closeButton, { key: 'Tab' });
+
+  expect(frame).toHaveFocus();
+  expect(backgroundButton).not.toHaveFocus();
+
+  backgroundButton.remove();
+});
+
+test('wraps Shift+Tab from the first focusable to the last inside the dialog', () => {
+  render(<VideoModalTimao video={video} onClose={() => {}} />);
+
+  const frame = screen.getByTitle(`Vídeo: ${video.title}`);
+  const closeButton = screen.getByRole('button', { name: 'Fechar' });
+  fireEvent.keyDown(frame, { key: 'Tab', shiftKey: true });
+
+  expect(closeButton).toHaveFocus();
+});
+
+test('restores focus to the trigger element when it closes', async () => {
+  const user = userEvent.setup();
+  function Page() {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+      <>
+        <button type="button" onClick={() => setIsOpen(true)}>
+          Assistir
+        </button>
+        {isOpen && (
+          <VideoModalTimao video={video} onClose={() => setIsOpen(false)} />
+        )}
+      </>
+    );
+  }
+  render(<Page />);
+
+  const trigger = screen.getByRole('button', { name: 'Assistir' });
+  await user.click(trigger);
+  expect(screen.getByRole('button', { name: 'Fechar' })).toHaveFocus();
+
+  await user.click(screen.getByRole('button', { name: 'Fechar' }));
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(trigger).toHaveFocus();
 });

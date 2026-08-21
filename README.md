@@ -173,7 +173,9 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
   persisted in `localStorage` (`timaoflix:theme`) and defaulting to the system preference.
 - **Embedded video player** — clicking a card (or the hero "Assistir") opens a modal with a
   privacy-enhanced YouTube player (`youtube-nocookie`) instead of leaving the page; close via
-  button, overlay click or Escape.
+  button, overlay click or Escape. Keyboard focus is fully trapped inside the dialog (Tab and
+  Shift+Tab wrap around the player, link and close button) and returns to the trigger element
+  when the modal closes.
 - **Video catalog with Netflix-style carousels:** `src/data/videos.js` curates 12 real videos
   grouped into categories; the Home page renders one horizontal carousel per category with
   **prev/next arrow navigation**, hover play overlays and category badges.
@@ -190,7 +192,7 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) with a
   real `rem` scale (no root font-size hack; the legacy 1px hack was removed in the a11y pass).
 - Component-level tests for every component + page/data/lib suites + App composition smoke test
-  - **axe accessibility checks** (53 tests, 22 suites), GitHub Actions CI (install → test →
+  - **axe accessibility checks** (57 tests, 22 suites), GitHub Actions CI (install → test →
     coverage summary → build → audit gate) on a Node 22 + 24 matrix.
 - **GitHub Pages deployment** configured via `.github/workflows/deploy.yml` (build with
   `base: '/re-timao-flix/'` → upload `dist/` → publish). Live once Pages is enabled with

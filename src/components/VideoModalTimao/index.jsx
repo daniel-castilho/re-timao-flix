@@ -88,14 +88,53 @@ const CloseButton = styled.button`
   }
 `;
 
+// Elements inside the dialog that can receive keyboard focus. The iframe is
+// included so keyboard users can still reach the YouTube player controls; its
+// own tabbability is inconsistent across browsers (see the allyjs focusable
+// data tables), but focusing it as a browsing context works everywhere.
+const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'iframe',
+  '[tabindex]:not([tabindex="-1"])',
+].join(', ');
+
 function VideoModalTimao({ video, onClose }) {
+  const dialogRef = useRef(null);
   const closeRef = useRef(null);
   const embedUrl = toEmbedUrl(video.url);
 
   useEffect(() => {
+    const previouslyFocused = document.activeElement;
+
     const onKeyDown = (event) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+
+      // Queried at event time so the list is never stale.
+      const focusables = Array.from(
+        dialogRef.current.querySelectorAll(FOCUSABLE_SELECTOR),
+      );
+      if (focusables.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      const isInside = dialogRef.current.contains(active);
+      const onEdge = event.shiftKey ? active === first : active === last;
+
+      if (!isInside || onEdge) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus();
+      }
     };
+
     document.addEventListener('keydown', onKeyDown);
     closeRef.current?.focus();
     const previousOverflow = document.body.style.overflow;
@@ -104,12 +143,14 @@ function VideoModalTimao({ video, onClose }) {
     return () => {
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus?.();
     };
   }, [onClose]);
 
   return (
     <Overlay onClick={onClose}>
       <Dialog
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={video.title}

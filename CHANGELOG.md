@@ -15,7 +15,9 @@ All notable changes to this project are documented in this file. The format is b
   adds videos to a local list persisted in `localStorage` (`timaoflix:userVideos`).
 - New components with tests: `HeroTimao`, `NavLinkTimao`, `BadgeTimao`.
 - **Embedded video player** — `VideoModalTimao` opens a `youtube-nocookie` iframe modal from
-  cards and the hero "Assistir" button (Escape/overlay/button close, body scroll lock).
+  cards and the hero "Assistir" button (Escape/overlay/button close, body scroll lock) with a
+  **full focus trap**: Tab/Shift+Tab cycle inside the dialog, initial focus lands on the close
+  button and focus returns to the trigger element on close.
 - **Light theme** — `ThemeToggleTimao` + `useTheme` (persisted, defaults to system preference);
   `colours.css` gains a `[data-theme='light']` token block.
 - **Search** — Home title search (accent/case-insensitive via `src/lib/text.js`) with a
@@ -33,10 +35,11 @@ All notable changes to this project are documented in this file. The format is b
   light-theme block); `reset.css` uses the new tokens and a real `rem` scale.
 - `VideoCardTimao` is now a button that opens the player modal (no more `target="_blank"` cards);
   the external YouTube link moved into the modal footer.
-- Test suite grew to **53 tests across 22 suites** (lib, modal, theme toggle, search, hero
-  rotation, axe checks).
-- `AGENTS.md` debt updated: the legacy root font-size hack is removed (resolved); new debt
-  notes `localStorage` persistence and the deep-route 404 on Pages.
+- Test suite grew to **57 tests across 22 suites** (lib, modal + focus trap, theme toggle,
+  search, hero rotation, axe checks).
+- `AGENTS.md` debt updated: the legacy root font-size hack is removed (resolved); the modal
+  focus-trap debt is resolved; remaining debt notes `localStorage` persistence and the
+  deep-route 404 on Pages.
 
 ### Security
 

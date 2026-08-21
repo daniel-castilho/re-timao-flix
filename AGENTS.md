@@ -118,11 +118,8 @@ timaoflix/
   theme) has no migration/version key — fine for a study project, worth versioning if the shapes
   evolve.
 - Accessibility is largely addressed (skip link, focus-visible, reduced-motion, real rem scale,
-  axe checks); a colour-contrast audit of the gold badge and muted text in both themes is still
-  open.
-- The embedded player modal does not implement a full focus trap (focus moves to the close
-  button and Escape closes; tab can still escape the dialog) — acceptable for a study project,
-  worth hardening with a proper trap or a dialog library later.
+  axe checks, a fully trapped and restoring modal dialog); a colour-contrast audit of the gold
+  badge and muted text in both themes is still open.
 
 ## Notes
 

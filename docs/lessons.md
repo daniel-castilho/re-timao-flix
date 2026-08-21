@@ -109,3 +109,18 @@ preinstall/install/postinstall scripts without a review record. The mode is advi
 `node_modules/<pkg>/install.js`), then record the decision with `npm approve-scripts <pkg>`
 (writes a version-pinned entry into `package.json`). Re-approve on version bumps — the returning
 warning is the review trigger, not noise to silence with `--no-allow-scripts-pin`.
+
+---
+
+## `userEvent.tab()` bypasses custom focus traps in jsdom (2026-08-21)
+
+While adding a focus trap to `VideoModalTimao`, tests driven by `userEvent.tab()` could not
+verify it: jsdom does not implement tabbing at all
+([jsdom#2102](https://github.com/jsdom/jsdom/issues/2102)), so user-event walks the DOM and moves
+focus itself — ignoring the component's `Tab` keydown handler, its `preventDefault()` and manual
+`.focus()` calls. The trap "looked" broken in tests while working fine in browsers.
+
+**Rule:** to test keyboard-trap behaviour (modal dialogs), dispatch raw keydown events with
+`fireEvent.keyDown(element, { key: 'Tab', shiftKey: true })` and assert on
+`document.activeElement` / `toHaveFocus()`. Keep `userEvent` for clicks and non-navigation keys
+(e.g. `{Escape}`); never assert tab order through `userEvent.tab()` against a custom trap.
