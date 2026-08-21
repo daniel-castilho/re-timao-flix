@@ -110,11 +110,11 @@ npm start          # http://localhost:3000 (Vite dev server)
 | :--------------------------- | :----------------------------------- |
 | Install dependencies         | `npm install`                        |
 | Dev server (port 3000)       | `npm start`                          |
-| Tests (one-shot) | `npm test` |
-| Tests (watch mode) | `npm run test:watch` |
-| Test coverage (v8 report) | `npm run test:coverage` |
-| Lint source | `npm run lint` |
-| Check formatting | `npm run format:check` |
+| Tests (one-shot)             | `npm test`                           |
+| Tests (watch mode)           | `npm run test:watch`                 |
+| Test coverage (v8 report)    | `npm run test:coverage`              |
+| Lint source                  | `npm run lint`                       |
+| Check formatting             | `npm run format:check`               |
 | Production build             | `npm run build` → outputs to `dist/` |
 | Preview the production build | `npm run preview`                    |
 | Security audit               | `npm audit`                          |

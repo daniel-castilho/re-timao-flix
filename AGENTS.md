@@ -50,10 +50,10 @@ Re-read the relevant parts before starting any task.
 | Dev server (port 3000)       | `npm start`             |
 | Tests (one-shot, CI-style)   | `npm test`              |
 | Tests (watch mode)           | `npm run test:watch`    |
-| Test coverage (v8 report) | `npm run test:coverage` |
-| Lint source | `npm run lint` |
-| Check formatting | `npm run format:check` |
-| Production build (`dist/`) | `npm run build` |
+| Test coverage (v8 report)    | `npm run test:coverage` |
+| Lint source                  | `npm run lint`          |
+| Check formatting             | `npm run format:check`  |
+| Production build (`dist/`)   | `npm run build`         |
 | Preview the production build | `npm run preview`       |
 | Security audit               | `npm audit`             |
 
