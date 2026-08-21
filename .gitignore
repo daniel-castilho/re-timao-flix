@@ -113,3 +113,6 @@ dist/
 
 # local backup artifacts
 *.bak.*
+
+# Release bundles are build artifacts attached to GitHub Releases
+/timaoflix-v*.zip
