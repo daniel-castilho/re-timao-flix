@@ -4,6 +4,18 @@ All notable changes to this project are documented in this file. The format is b
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2](https://github.com/daniel-castilho/re-timao-flix/compare/v0.2.1...v0.2.2) (2026-08-21)
+
+
+### Continuous Integration
+
+* **release:** attach the bundle in the merge-push run itself ([1f3990c](https://github.com/daniel-castilho/re-timao-flix/commit/1f3990c3d1fbd381b7580f818990383d9d95735f))
+
+
+### Miscellaneous
+
+* **git:** stop tracking the release bundle archive ([629f166](https://github.com/daniel-castilho/re-timao-flix/commit/629f166ba149d1f66939c1ae41a6073001e45505))
+
 ## [0.2.1](https://github.com/daniel-castilho/re-timao-flix/compare/v0.2.0...v0.2.1) (2026-08-21)
 
 
