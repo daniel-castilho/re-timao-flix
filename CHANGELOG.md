@@ -23,6 +23,9 @@ All notable changes to this project are documented in this file. The format is b
   `test` → `vitest run`, plus `preview` and `test:watch`; `eslintConfig`/`browserslist`
   (CRA-era) removed.
 - CI (`ci.yml`): audit gate tightened to `npm audit --audit-level=high` (0 today).
+- CI (`ci.yml`): `actions/checkout` and `actions/setup-node` bumped `@v4` → `@v6` — both majors
+  now run on the Node 24 action runtime, clearing the "Node.js 20 is deprecated" annotations
+  (Node 20 removal from GitHub runners lands later in 2026).
 - CI (`ci.yml`) now runs a **Node 22 + 24 matrix** (Node 20 is EOL since Apr 2026; Vite 7
   requires ^20.19 || >=22.12). Every leg pins npm 11.17.0 and runs an informational coverage
   summary step (no thresholds yet).
