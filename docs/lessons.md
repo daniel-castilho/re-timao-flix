@@ -152,3 +152,17 @@ is harmless in the app — the failure is purely a jsdom/axe interaction.
 **Rule:** when a page under axe testing embeds third-party frames, remove them from the test
 container before running axe (`container.querySelector('iframe')?.remove()`). The embedded
 player is outside the app's accessibility contract anyway; audit our own markup only.
+
+---
+
+## jsdom has no Blob download flow: stub object URLs and anchor clicks (2026-08-21)
+
+Testing the "export user videos as JSON" feature hit two jsdom gaps at once:
+`URL.createObjectURL` is not implemented, and `HTMLAnchorElement.click()` on a `blob:` link
+would attempt a navigation. The component code is standard browser-only download plumbing —
+the gap is environmental.
+
+**Rule:** for download features in component tests, stub the pair before acting —
+`URL.createObjectURL = (blob) => …` capturing blobs (assert with `await blob.text()`) plus
+`URL.revokeObjectURL = () => {}`, and `vi.spyOn(HTMLAnchorElement.prototype, 'click')` with a
+no-op mock. Restore both in `afterEach`; keep the real flow in the component untouched.

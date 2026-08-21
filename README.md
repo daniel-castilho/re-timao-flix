@@ -190,7 +190,9 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Client-side routing** with `react-router` 7: Home (`/`), Novo Vídeo (`/novo-video`),
   catch-all back to Home; the header has a navigation (Início + Novo vídeo).
 - **Novo vídeo page is functional** — a form (title, category, YouTube URL) with validation
-  that adds videos to a local list persisted in `localStorage` (`timaoflix:userVideos`).
+  that adds videos to a local list persisted in `localStorage` (`timaoflix:userVideos`), with
+  **export/import JSON** portability: download the personal collection as a versioned file and
+  import it on another device (merge by id, invalid files are rejected with a clear message).
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
   testing-library 14.
 - **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) with a

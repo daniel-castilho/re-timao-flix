@@ -1,6 +1,9 @@
 import {
   USER_VIDEOS_STORAGE_KEY,
+  buildUserVideosExport,
   loadUserVideos,
+  mergeUserVideos,
+  parseUserVideosJson,
   saveUserVideos,
 } from './userVideos';
 
@@ -83,5 +86,67 @@ describe('saveUserVideos', () => {
       version: 1,
       videos: legacyList,
     });
+  });
+});
+
+describe('buildUserVideosExport', () => {
+  test('produces the same envelope shape as storage, pretty-printed', () => {
+    const payload = JSON.parse(buildUserVideosExport(legacyList));
+
+    expect(payload).toEqual({ version: 1, videos: legacyList });
+    expect(buildUserVideosExport(legacyList)).toContain('\n  "videos"');
+  });
+});
+
+describe('parseUserVideosJson', () => {
+  test('accepts an export payload produced by buildUserVideosExport', () => {
+    const text = buildUserVideosExport(legacyList);
+
+    expect(parseUserVideosJson(text)).toEqual(legacyList);
+  });
+
+  test('accepts the legacy bare-array shape', () => {
+    expect(parseUserVideosJson(JSON.stringify(legacyList))).toEqual(legacyList);
+  });
+
+  test('returns null for corrupt JSON', () => {
+    expect(parseUserVideosJson('{definitely not json')).toBeNull();
+  });
+
+  test('returns null for unknown envelope versions', () => {
+    const text = JSON.stringify({ version: 99, videos: legacyList });
+
+    expect(parseUserVideosJson(text)).toBeNull();
+  });
+
+  test('returns null when no well-formed entry remains', () => {
+    const text = JSON.stringify([{ title: 'sem id nem url' }, 7]);
+
+    expect(parseUserVideosJson(text)).toBeNull();
+  });
+});
+
+describe('mergeUserVideos', () => {
+  test('appends incoming videos that are not stored yet', () => {
+    const current = [legacyList[0]];
+    const incoming = [
+      legacyList[1],
+      { id: 'c', title: 'Título C', url: 'https://youtu.be/c' },
+    ];
+
+    expect(mergeUserVideos(current, incoming)).toEqual([
+      legacyList[0],
+      legacyList[1],
+      { id: 'c', title: 'Título C', url: 'https://youtu.be/c' },
+    ]);
+  });
+
+  test('keeps the stored entry when an imported id already exists', () => {
+    const current = [{ id: 'a', title: 'Local', url: 'https://youtu.be/a' }];
+    const incoming = [
+      { id: 'a', title: 'Importado', url: 'https://youtu.be/a' },
+    ];
+
+    expect(mergeUserVideos(current, incoming)).toEqual(current);
   });
 });

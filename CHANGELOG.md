@@ -27,6 +27,10 @@ All notable changes to this project are documented in this file. The format is b
 - **Versioned user-video storage** — `src/lib/userVideos.js` wraps `timaoflix:userVideos` in a
   `{ version, videos }` envelope (`USER_VIDEOS_STORAGE_VERSION`), migrates the legacy bare-array
   shape and degrades safely on corrupt/unknown data; unit-tested.
+- **Export/import of user videos** — dependency-free portability between devices: the Novo vídeo
+  page downloads the personal collection as a pretty-printed versioned JSON file and imports
+  files back (same envelope or legacy array), merging by id without clobbering stored entries;
+  invalid payloads are rejected with an inline alert.
 - **Search** — Home title search (accent/case-insensitive via `src/lib/text.js`) with a
   no-results message.
 - **Rotating hero** — three featured videos (one per category) rotate every 6 s, honouring

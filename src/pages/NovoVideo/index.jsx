@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import videos from '../../data/videos';
 import { extractYouTubeId } from '../../lib/youtube';
-import { loadUserVideos, saveUserVideos } from '../../lib/userVideos';
+import {
+  buildUserVideosExport,
+  loadUserVideos,
+  mergeUserVideos,
+  parseUserVideosJson,
+  saveUserVideos,
+} from '../../lib/userVideos';
 
 const categories = [...new Set(videos.map((video) => video.category))];
 
@@ -102,6 +108,55 @@ const ListHeading = styled.h2`
   font-weight: bold;
 `;
 
+// Export/import tools: portability for the personal collection without any
+// backend — the JSON file is the transport between devices.
+const TransferRow = styled.div`
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const ToolButton = styled.button`
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-surface-border);
+  border-radius: 0.25rem;
+  background-color: var(--color-surface);
+  color: var(--color-gray-light);
+  font-weight: bold;
+  font-size: 0.875rem;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-surface-hover);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-primary-medium);
+    outline-offset: 2px;
+  }
+`;
+
+// Keeps the input focusable for keyboard users while staying invisible; the
+// preceding label/button carries the visible affordance.
+const VisuallyHiddenInput = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+`;
+
 const List = styled.ul`
   margin-top: 1rem;
   display: grid;
@@ -147,6 +202,8 @@ function NovoVideo() {
   const [category, setCategory] = useState(categories[0]);
   const [url, setUrl] = useState('');
   const [error, setError] = useState('');
+  const [importError, setImportError] = useState('');
+  const fileInputRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -182,6 +239,40 @@ function NovoVideo() {
     setTitle('');
     setUrl('');
     setError('');
+  };
+
+  const handleExport = () => {
+    const blob = new Blob([buildUserVideosExport(userVideos)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `timaoflix-videos-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportFile = async (event) => {
+    const file = event.target.files?.[0];
+    // Reset the input so importing the same file twice still fires change.
+    event.target.value = '';
+    if (!file) return;
+
+    const incoming = parseUserVideosJson(await file.text());
+    if (!incoming) {
+      setImportError(
+        'Não foi possível importar: o arquivo não contém vídeos válidos.',
+      );
+      return;
+    }
+
+    setImportError('');
+    const merged = mergeUserVideos(userVideos, incoming);
+    setUserVideos(merged);
+    saveUserVideos(merged);
   };
 
   return (
@@ -245,6 +336,27 @@ function NovoVideo() {
           </List>
         </>
       )}
+
+      <TransferRow>
+        <ToolButton
+          type="button"
+          onClick={handleExport}
+          disabled={userVideos.length === 0}
+        >
+          Exportar vídeos
+        </ToolButton>
+        <ToolButton type="button" onClick={() => fileInputRef.current?.click()}>
+          Importar vídeos
+        </ToolButton>
+        <VisuallyHiddenInput
+          ref={fileInputRef}
+          type="file"
+          accept="application/json,.json"
+          onChange={handleImportFile}
+          aria-label="Importar vídeos de um arquivo JSON"
+        />
+      </TransferRow>
+      {importError && <Error role="alert">{importError}</Error>}
     </PageSection>
   );
 }
