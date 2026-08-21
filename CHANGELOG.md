@@ -32,6 +32,10 @@ All notable changes to this project are documented in this file. The format is b
 - `docs/lessons.md` expanded with the Vite migration lessons.
 
 ### Added
+- Video catalog with Netflix-style carousels: `src/data/videos.js` curates 12 real videos
+  (official channels and documented productions, PT-BR copy) grouped by category; the Home page
+  renders one horizontal carousel per category via `VideoSectionTimao` + `VideoCardTimao`
+  (thumbnail + title linking to YouTube).
 - Client-side routing with `react-router` 7 (library mode): Home (`/`) and Novo Vídeo
   (`/novo-video`) pages plus a catch-all back to Home; the header CTA became a router link
   (`ButtonLinkTimao`, reusing `ButtonTimao` styles via `withComponent`).

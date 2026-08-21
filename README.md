@@ -58,7 +58,7 @@ timaoflix/
     ├── index.jsx         Entry point — React 18 createRoot + BrowserRouter, global styles
     ├── App.jsx           Layout: HeaderTimao + <Routes> (Home, NovoVideo) + FooterTimao
     ├── pages/            Route pages (PascalCase folders, index.jsx)
-    │   ├── Home/         Landing page ("/") — video sections land here
+    │   ├── Home/         Landing page ("/") — video sections by category
     │   └── NovoVideo/    "Novo vídeo" page ("/novo-video")
     ├── components/       styled-components primitives
     │   ├── ButtonTimao/  Nav CTA button ("Novo vídeo")
@@ -67,11 +67,16 @@ timaoflix/
     │   ├── HeaderTimao/  Top bar with logo + button
     │   ├── HighlightTimao  Inline <strong> highlight
     │   ├── LinkTimao/    Styled anchor
-    │   └── LogoTimao/    Styled <img> logo
+    │   ├── LogoTimao/    Styled <img> logo
+    │   ├── VideoCardTimao/  Netflix-style card: thumbnail + title linking to YouTube
+    │   └── VideoSectionTimao/  Horizontal carousel row for one category
+    ├── data/
+    │   └── videos.js     Curated video catalog (PT-BR content, real YouTube links)
     ├── styles/
     │   ├── reset.css     Meyer reset (global)
     │   └── settings/colours.css  Design tokens (--color-*)
-    ├── App.test.jsx      Smoke tests (Vitest + Testing Library)
+    ├── App.test.jsx      App composition tests (Vitest + Testing Library)
+    │                     + per-component suites in components/*/index.test.jsx
     └── setupTests.js     jest-dom matchers
 ├── vite.config.mjs       Vite + Vitest config (react plugin, jsdom environment)
 ```
@@ -154,6 +159,9 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 ## Current State
 
 - Netflix-style header + footer UI composed of styled-components, PT-BR copy.
+- **Video catalog with Netflix-style carousels:** `src/data/videos.js` curates 12 real videos
+  (official channels and documented productions) grouped into categories; the Home page renders
+  one horizontal carousel per category (`VideoSectionTimao` + `VideoCardTimao`).
 - **Client-side routing** with `react-router` 7: Home (`/`), Novo Vídeo (`/novo-video`),
   catch-all back to Home; the header CTA is a router link reusing the button styles.
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
@@ -167,6 +175,6 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 
 Deliberately not implemented yet (candidate backlog):
 
-- Expand the UI: video carousel/grid, detail cards.
+- Detail cards / dedicated video page.
 - GitHub Pages (or similar) deployment of the static bundle via CI.
 - Product-consistency pass on accessibility (semantic HTML, focus states, alt text).
