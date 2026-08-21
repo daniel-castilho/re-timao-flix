@@ -26,6 +26,9 @@ All notable changes to this project are documented in this file. The format is b
 - `docs/lessons.md` expanded with the Vite migration lessons.
 
 ### Added
+- Test coverage tooling: `@vitest/coverage-v8` (devDependency) with a `test:coverage` script —
+  v8 provider over `src/**`, excluding test infrastructure (`setupTests.js`) and the DOM
+  bootstrap entry (`index.jsx`). Current suite reports 100% statements/branches/functions/lines.
 - Component-level test suites for every styled-component primitive
   (`src/components/*/index.test.jsx`) alongside the existing App composition smoke test —
   10 tests across 7 suites, all offline, deterministic and order-independent.

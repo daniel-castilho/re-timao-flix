@@ -102,6 +102,7 @@ npm start          # http://localhost:3000 (Vite dev server)
 | Dev server (port 3000) | `npm start` |
 | Tests (one-shot) | `npm test` |
 | Tests (watch mode) | `npm run test:watch` |
+| Test coverage (v8 report) | `npm run test:coverage` |
 | Production build | `npm run build` → outputs to `dist/` |
 | Preview the production build | `npm run preview` |
 | Security audit | `npm audit` |
@@ -114,6 +115,7 @@ Tests run with **Vitest** + Testing Library in a jsdom environment (configured i
 ```sh
 npm test             # one-shot, non-interactive (CI-friendly)
 npm run test:watch   # watch mode
+npm run test:coverage  # v8 coverage report
 ```
 
 Current total: **10 tests across 7 suites**, all offline and deterministic (the app has no

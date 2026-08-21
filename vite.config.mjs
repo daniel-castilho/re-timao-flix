@@ -10,5 +10,12 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',
     globals: true,
+    coverage: {
+      provider: 'v8',
+      include: ['src/**'],
+      // setupTests.js is test infrastructure; index.jsx is the DOM bootstrap
+      // (createRoot) that no component test exercises by design.
+      exclude: ['src/setupTests.js', 'src/index.jsx'],
+    },
   },
 });
