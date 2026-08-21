@@ -108,3 +108,6 @@ build/
 
 # Vite production build output
 dist/
+
+# local backup artifacts
+*.bak.*
