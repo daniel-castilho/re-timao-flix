@@ -19,5 +19,5 @@ test('renders one section per category covering every video', () => {
     ).toBeInTheDocument();
   }
 
-  expect(screen.getAllByRole('img')).toHaveLength(videos.length);
+  expect(screen.getAllByRole('listitem')).toHaveLength(videos.length);
 });

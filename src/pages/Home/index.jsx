@@ -5,20 +5,20 @@ import videos, { groupVideosByCategory } from '../../data/videos';
 
 const HomeSection = styled.section`
   flex: 1;
-  padding: 40rem 0 20rem;
+  padding: 2.5rem 0 1.25rem;
   background-color: var(--color-black-dark);
   color: var(--color-gray-light);
 `;
 
 const Title = styled.h1`
-  font-size: 32rem;
-  margin-bottom: 12rem;
-  padding: 0 40rem;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  padding: 0 2.5rem;
 `;
 
 const Tagline = styled.p`
-  margin-bottom: 24rem;
-  padding: 0 40rem;
+  margin-bottom: 1.5rem;
+  padding: 0 2.5rem;
 `;
 
 const sections = groupVideosByCategory(videos);

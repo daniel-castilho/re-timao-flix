@@ -8,13 +8,19 @@ const video = {
   thumbnailUrl: 'https://img.youtube.com/vi/Bui2mO6AbxA/hqdefault.jpg',
 };
 
-test('renders an external link with the video thumbnail and title', () => {
+test('renders an external link named by the video title', () => {
   render(<VideoCardTimao video={video} />);
 
-  const link = screen.getByRole('link');
+  const link = screen.getByRole('link', {
+    name: `${video.title} (abre em uma nova aba)`,
+  });
   expect(link).toHaveAttribute('href', video.url);
   expect(link).toHaveAttribute('target', '_blank');
+  expect(link).toHaveAttribute('rel', 'noreferrer');
+});
 
-  expect(screen.getByRole('img')).toHaveAttribute('alt', video.title);
-  expect(screen.getByText(video.title)).toBeInTheDocument();
+test('keeps the thumbnail decorative so the title is announced once', () => {
+  const { container } = render(<VideoCardTimao video={video} />);
+
+  expect(container.querySelector('img')).toHaveAttribute('alt', '');
 });

@@ -3,14 +3,14 @@ import HighlightTimao from '../../components/HighlightTimao';
 
 const NovoVideoSection = styled.section`
   flex: 1;
-  padding: 40rem;
+  padding: 2.5rem;
   background-color: var(--color-black-dark);
   color: var(--color-gray-light);
 `;
 
 const Title = styled.h1`
-  font-size: 32rem;
-  margin-bottom: 12rem;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
 `;
 
 function NovoVideo() {

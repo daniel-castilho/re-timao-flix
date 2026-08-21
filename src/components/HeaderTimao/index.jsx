@@ -6,16 +6,16 @@ const HeaderTimao = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30rem 40rem;
+  padding: 1.875rem 2.5rem;
   background-color: var(--color-black-dark);
-  border-bottom: 4rem solid var(--color-primary-medium);
+  border-bottom: 4px solid var(--color-primary-medium);
 
   @media (max-width: 800px) {
     justify-content: center;
-    padding: 15rem 16rem;
+    padding: 0.9375rem 1rem;
 
     & > ${LogoTimao} {
-      height: 35rem;
+      height: 2.1875rem;
     }
 
     & > ${ButtonTimao} {

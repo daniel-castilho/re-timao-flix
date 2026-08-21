@@ -82,36 +82,37 @@ function renderApp(initialEntries) {
 
 ## Current automated suite (map)
 
-| Area           | File(s)                                           | Focus                                                                                                                 |
-| :------------- | :------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------- |
-| App / routing  | `src/App.test.jsx`                                | Header CTA links to `/novo-video`; root renders Home; `/novo-video` renders the new-video page; footer credit present |
-| Button         | `src/components/ButtonTimao/index.test.jsx`       | Renders a `BUTTON` with content; forwards attributes (`type`)                                                         |
-| Button (link)  | `src/components/ButtonLinkTimao/index.test.jsx`   | Router-aware button-link renders as a link                                                                            |
-| Header         | `src/components/HeaderTimao/index.test.jsx`       | Header shell renders                                                                                                  |
-| Footer         | `src/components/FooterTimao/index.test.jsx`       | Footer renders with logo/credit                                                                                       |
-| Highlight      | `src/components/HighlightTimao/index.test.jsx`    | Inline highlight renders                                                                                              |
-| Link           | `src/components/LinkTimao/index.test.jsx`         | Styled anchor renders with href                                                                                       |
-| Logo           | `src/components/LogoTimao/index.test.jsx`         | Logo image renders with the expected alt                                                                              |
-| Video card     | `src/components/VideoCardTimao/index.test.jsx`    | External link (href, target, rel), thumbnail alt = title                                                              |
-| Video section  | `src/components/VideoSectionTimao/index.test.jsx` | Section renders its category heading and cards                                                                        |
-| Data helpers   | `src/data/videos.test.js`                         | `groupVideosByCategory` — groups by category in first-appearance order; every video lands in exactly one group        |
-| Home page      | `src/pages/Home/index.test.jsx`                   | Heading; one section per category covering every video                                                                |
-| New-video page | `src/pages/NovoVideo/index.test.jsx`              | Placeholder page renders                                                                                              |
+| Area           | File(s)                                           | Focus                                                                                                                                                    |
+| :------------- | :------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| App / routing  | `src/App.test.jsx`                                | Header CTA links to `/novo-video`; root renders Home; `/novo-video` renders the new-video page; footer credit present; skip link targets `#main-content` |
+| Button         | `src/components/ButtonTimao/index.test.jsx`       | Renders a `BUTTON` with content; forwards attributes (`type`)                                                                                            |
+| Button (link)  | `src/components/ButtonLinkTimao/index.test.jsx`   | Router-aware button-link renders as a link                                                                                                               |
+| Header         | `src/components/HeaderTimao/index.test.jsx`       | Header shell renders                                                                                                                                     |
+| Footer         | `src/components/FooterTimao/index.test.jsx`       | Footer renders with logo/credit                                                                                                                          |
+| Highlight      | `src/components/HighlightTimao/index.test.jsx`    | Inline highlight renders                                                                                                                                 |
+| Link           | `src/components/LinkTimao/index.test.jsx`         | Styled anchor renders with href                                                                                                                          |
+| Logo           | `src/components/LogoTimao/index.test.jsx`         | Logo image renders with the expected alt                                                                                                                 |
+| Skip link      | `src/components/SkipLinkTimao/index.test.jsx`     | Skip link points at `#main-content`                                                                                                                      |
+| Video card     | `src/components/VideoCardTimao/index.test.jsx`    | External link named by the title (+ new-tab hint, `target`, `rel`); thumbnail is decorative (`alt=""`)                                                   |
+| Video section  | `src/components/VideoSectionTimao/index.test.jsx` | Section renders its category heading and cards                                                                                                           |
+| Data helpers   | `src/data/videos.test.js`                         | `groupVideosByCategory` — groups by category in first-appearance order; every video lands in exactly one group                                           |
+| Home page      | `src/pages/Home/index.test.jsx`                   | Heading; one section per category covering every video                                                                                                   |
+| New-video page | `src/pages/NovoVideo/index.test.jsx`              | Placeholder page renders                                                                                                                                 |
 
-**Current total: 20 tests across 13 files** (as of the latest verified state). When you change
+**Current total: 23 tests across 14 files** (as of the latest verified state). When you change
 behaviour covered above, **extend the existing file** instead of inventing a parallel suite.
 
 ---
 
 ## Regression checklist
 
-| Area                 | Must verify                                                                                                         |
-| :------------------- | :------------------------------------------------------------------------------------------------------------------ |
-| **Routes**           | `/` renders Home; `/novo-video` renders the new-video page; unknown paths fall back to Home (`Route path="*"`)      |
-| **Header CTA**       | `ButtonLinkTimao` links to `/novo-video` with the label "Novo vídeo"                                                |
-| **Video card**       | External link opens in a new tab (`target="_blank"`) with `rel="noreferrer"`; thumbnail alt equals the title        |
-| **Catalog grouping** | `groupVideosByCategory` preserves first-appearance order and places every video in exactly one group                |
-| **Coverage config**  | `src/setupTests.js` and `src/index.jsx` remain excluded; new src folders are still covered by `include: ['src/**']` |
+| Area                 | Must verify                                                                                                                                                             |
+| :------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Routes**           | `/` renders Home; `/novo-video` renders the new-video page; unknown paths fall back to Home (`Route path="*"`)                                                          |
+| **Header CTA**       | `ButtonLinkTimao` links to `/novo-video` with the label "Novo vídeo"                                                                                                    |
+| **Video card**       | External link opens in a new tab (`target="_blank"`) with `rel="noreferrer"`; accessible name = title + "(abre em uma nova aba)"; thumbnail stays decorative (`alt=""`) |
+| **Catalog grouping** | `groupVideosByCategory` preserves first-appearance order and places every video in exactly one group                                                                    |
+| **Coverage config**  | `src/setupTests.js` and `src/index.jsx` remain excluded; new src folders are still covered by `include: ['src/**']`                                                     |
 
 **Catalog regression (data):** add/remove a video → `videos.test.js` still passes (group order,
 total count).

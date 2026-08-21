@@ -5,14 +5,14 @@ const FooterTimao = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 16rem;
+  font-size: 1rem;
   background-color: var(--color-black-dark);
   color: var(--color-gray-light);
-  padding: 20rem 0;
-  border-top: 4rem solid var(--color-primary-medium);
+  padding: 1.25rem 0;
+  border-top: 4px solid var(--color-primary-medium);
 
   & > ${LogoTimao} {
-    margin-bottom: 20rem;
+    margin-bottom: 1.25rem;
   }
 `;
 

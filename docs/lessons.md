@@ -109,3 +109,17 @@ preinstall/install/postinstall scripts without a review record. The mode is advi
 `node_modules/<pkg>/install.js`), then record the decision with `npm approve-scripts <pkg>`
 (writes a version-pinned entry into `package.json`). Re-approve on version bumps — the returning
 warning is the review trigger, not noise to silence with `--no-allow-scripts-pin`.
+
+---
+
+## An `<img alt="">` loses the implicit `img` role in Testing Library queries (2026-08-21)
+
+Making video thumbnails decorative (`alt=""`) — the right call when the surrounding link is
+already named by its visible title — silently removed them from `getByRole('img')` results:
+per ARIA-in-HTML, an image with an empty alt maps to the `presentation`/`none` role, not
+`img`. The Home suite's `getAllByRole('img')` count went from 12 to 0 with zero DOM changes
+otherwise.
+
+**Rule:** when you flatten an image to decorative, re-audit every role-based query that used
+to find it. Count the semantic container instead (the `li` of a carousel row) or assert the
+`alt` attribute directly; never "fix" it by keeping a redundant alt just to please the query.

@@ -143,11 +143,14 @@ src/
 
   Add new tokens to `colours.css` first; never hardcode a colour hex inside a component.
 
-- All component sizing now uses **`rem`** under the project convention `1rem == 1px` (the
-  `html, body { font-size: 1px }` rule in `reset.css`; see AGENTS debt — flagged as an
-  accessibility issue to resolve with the accessibility pass). Media-query breakpoints stay
-  in `px` (e.g. `@media (max-width: 800px)`): per spec, `rem` inside media queries resolves
-  against the browser's initial root font size (16px), not the project's hack.
+- All component sizing uses **`rem` on a real scale** (root font size is the browser default,
+  16px, and respects the user's preference — the old `1rem == 1px` reset hack was removed in
+  the accessibility pass). Convert design-px values with `value / 16` (e.g. `24px` →
+  `1.5rem`). Hairline borders (`1px`, `4px`) stay in `px`. Media-query breakpoints stay in
+  `px` too (e.g. `@media (max-width: 800px)`): per spec, `rem` inside media queries resolves
+  against the browser's initial root font size, not the user's setting.
+- Interactive elements (`ButtonTimao`, `LinkTimao`, card links) carry a visible
+  `:focus-visible` outline in `--color-primary-medium`; keep it when creating new ones.
 - Styled-components that target another styled component use `& ${Comp}` / `${Comp}:hover &`
   composition (see `VideoCardTimao`); keep those selectors adjacent to the styled block.
 

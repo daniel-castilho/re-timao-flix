@@ -36,3 +36,13 @@ test('renders the footer credit from the Alura immersion', () => {
   renderApp(['/']);
   expect(screen.getByText(/Alura/)).toBeInTheDocument();
 });
+
+test('offers a skip link targeting the main content landmark', () => {
+  renderApp(['/']);
+
+  const skipLink = screen.getByRole('link', {
+    name: 'Pular para o conteúdo',
+  });
+  expect(skipLink).toHaveAttribute('href', '#main-content');
+  expect(document.getElementById('main-content').tagName).toBe('MAIN');
+});
