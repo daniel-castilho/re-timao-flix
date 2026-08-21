@@ -1,1 +1,5 @@
 src/styles/reset.css
+
+# Machine-managed by Release Please; its generated markdown style is not
+# prettier-compatible and reformatting it would fight every release.
+CHANGELOG.md

@@ -166,3 +166,17 @@ the gap is environmental.
 `URL.createObjectURL = (blob) => …` capturing blobs (assert with `await blob.text()`) plus
 `URL.revokeObjectURL = () => {}`, and `vi.spyOn(HTMLAnchorElement.prototype, 'click')` with a
 no-op mock. Restore both in `afterEach`; keep the real flow in the component untouched.
+
+---
+
+## Machine-generated files must be exempt from the formatter (2026-08-21)
+
+The first Release Please cut (`v0.2.0`) turned CI, Deploy **and** the release-bundle job red at
+`format:check`: the action writes `CHANGELOG.md` in its own markdown style, which Prettier
+rejects — so the release shipped with no attached artifact and two failing workflows. Two green
+tools fought each other over a file neither of our edits touches.
+
+**Rule:** any file written by automation (generated changelogs, vendored resets, lockfile-style
+artifacts) belongs in `.prettierignore`/formatter excludes on day one. Before wiring a bot that
+edits tracked files, run its output through every local gate; if a gate disagrees with the
+bot's format, exclude the file from that gate rather than reformatting bot output by hand.
