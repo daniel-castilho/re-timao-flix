@@ -111,13 +111,13 @@ timaoflix/
 
 ## Known technical debt (resolve later; flag, don't silently fix)
 
-- No backend, no deployment pipeline — static SPA bundle only (client-side routing needs a
-  fallback to `index.html` on static hosts).
-- Accessibility pass not done (semantic HTML, focus states, alt text are partially improvised).
-- `src/styles/reset.css` pins the root font size with `html, body { font-size: 1px }` (CRA-era
-  hack so that `1rem == 1px`; all component sizing relies on it). It silently ignores the
-  user's browser font-size preference — an accessibility issue to resolve together with the
-  accessibility pass (proper fix: real rem scale + converting every value).
+- No backend — static SPA bundle only (client-side routing on GitHub Pages serves only `/`;
+  deep-route refreshes 404 on Pages, navigate from the home page or use HashRouter for full
+  robustness).
+- "Novo vídeo" persistence uses `localStorage` (`timaoflix:userVideos`) with no migration/version
+  key — fine for a study project, worth versioning if the shape evolves.
+- Accessibility is largely addressed (skip link, focus-visible, reduced-motion, real rem scale);
+  an audit of colour contrast on the gold badge and muted text is still open.
 
 ## Notes
 

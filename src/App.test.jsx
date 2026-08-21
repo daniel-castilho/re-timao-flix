@@ -46,3 +46,10 @@ test('offers a skip link targeting the main content landmark', () => {
   expect(skipLink).toHaveAttribute('href', '#main-content');
   expect(document.getElementById('main-content').tagName).toBe('MAIN');
 });
+
+test('renders a navigation link back to the home page', () => {
+  renderApp(['/novo-video']);
+
+  const homeLink = screen.getByRole('link', { name: 'Início' });
+  expect(homeLink).toHaveAttribute('href', '/');
+});

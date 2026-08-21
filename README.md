@@ -166,20 +166,24 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 
 ## Current State
 
-- Netflix-style header + footer UI composed of styled-components, PT-BR copy.
+- **Redesigned dark streaming UI** — refined "TimãoFlix" visual identity: deep-graphite palette
+  (`#0b0d0f` / `#1a2027`), gold accent for the "Conquistas" category, sticky blurred header with
+  navigation, and a **hero** on the Home page featuring a curated video with a watch CTA.
 - **Video catalog with Netflix-style carousels:** `src/data/videos.js` curates 12 real videos
   (official channels and documented productions) grouped into categories; the Home page renders
-  one horizontal carousel per category (`VideoSectionTimao` + `VideoCardTimao`).
+  one horizontal carousel per category (`VideoSectionTimao` + `VideoCardTimao`) with
+  **prev/next arrow navigation**, hover play overlays and category badges.
 - **Client-side routing** with `react-router` 7: Home (`/`), Novo Vídeo (`/novo-video`),
-  catch-all back to Home; the header CTA is a router link reusing the button styles.
+  catch-all back to Home; the header has a navigation (Início + Novo vídeo).
+- **Novo vídeo page is functional** — a form (title, category, YouTube URL) with validation
+  that adds videos to a local list persisted in `localStorage` (`timaoflix:userVideos`).
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
   testing-library 14.
-- **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) and
-  component sizing unified on `rem` (`1rem == 1px` per the reset convention; media-query
-  breakpoints stay `px`). The root font-size hack is tracked as accessibility debt.
-- Component-level tests for every styled-component primitive + page/data suites + App
-  composition smoke test (23 tests, 14 suites), GitHub Actions CI (install → test → coverage
-  summary → build → audit gate) on a Node 22 + 24 matrix.
+- **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) with a
+  real `rem` scale (no root font-size hack; the legacy 1px hack was removed in the a11y pass).
+- Component-level tests for every component + page/data suites + App composition smoke test
+  (33 tests, 17 suites), GitHub Actions CI (install → test → coverage summary → build → audit
+  gate) on a Node 22 + 24 matrix.
 - **GitHub Pages deployment** configured via `.github/workflows/deploy.yml` (build with
   `base: '/re-timao-flix/'` → upload `dist/` → publish). Live once Pages is enabled with
   "Source: GitHub Actions" in the repository settings; see
@@ -191,4 +195,4 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 Deliberately not implemented yet (candidate backlog):
 
 - Detail cards / dedicated video page.
-- Product-consistency pass on accessibility (semantic HTML, focus states, alt text).
+- Colour-contrast audit (gold badge, muted text) and full keyboard-navigation pass.

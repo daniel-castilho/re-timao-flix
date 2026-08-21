@@ -23,3 +23,13 @@ test('renders the section title and one card per video', () => {
   ).toBeInTheDocument();
   expect(screen.getAllByRole('link')).toHaveLength(videos.length);
 });
+
+test('renders previous and next navigation buttons', () => {
+  render(<VideoSectionTimao title="Conquistas" videos={videos} />);
+  expect(
+    screen.getByRole('button', { name: /anterior: conquistas/i }),
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole('button', { name: /próximo: conquistas/i }),
+  ).toBeInTheDocument();
+});

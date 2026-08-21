@@ -3,19 +3,25 @@ import ButtonTimao from '../ButtonTimao';
 import LogoTimao from '../LogoTimao';
 
 const HeaderTimao = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 20;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.875rem 2.5rem;
-  background-color: var(--color-black-dark);
-  border-bottom: 4px solid var(--color-primary-medium);
+  gap: 1rem;
+  padding: 1.125rem 2.5rem;
+  background-color: rgba(11, 13, 15, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--color-primary-medium);
 
   @media (max-width: 800px) {
-    justify-content: center;
-    padding: 0.9375rem 1rem;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
 
     & > ${LogoTimao} {
-      height: 2.1875rem;
+      height: 2rem;
     }
 
     & > ${ButtonTimao} {

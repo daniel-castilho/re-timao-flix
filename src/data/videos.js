@@ -2,6 +2,7 @@
 // productions). Thumbnails use YouTube's public image endpoint.
 const videos = [
   {
+    featured: true,
     id: 'libertadores-2012-campanha',
     title: 'Melhores momentos da campanha campeã — Libertadores 2012',
     category: 'Conquistas',

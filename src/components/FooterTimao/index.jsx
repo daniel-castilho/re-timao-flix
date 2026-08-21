@@ -1,19 +1,16 @@
 import styled from 'styled-components';
-import LogoTimao from '../LogoTimao';
 
 const FooterTimao = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1rem;
-  background-color: var(--color-black-dark);
-  color: var(--color-gray-light);
-  padding: 1.25rem 0;
-  border-top: 4px solid var(--color-primary-medium);
-
-  & > ${LogoTimao} {
-    margin-bottom: 1.25rem;
-  }
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  font-size: 0.9375rem;
+  background-color: var(--color-black-light);
+  color: var(--color-gray-muted);
+  border-top: 1px solid var(--color-surface-border);
+  text-align: center;
 `;
 
 export default FooterTimao;

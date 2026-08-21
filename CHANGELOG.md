@@ -6,6 +6,24 @@ All notable changes to this project are documented in this file. The format is b
 
 ## [Unreleased]
 
+### Added
+
+- **Dark streaming redesign** — deep-graphite palette (`#0b0d0f`/`#1a2027`), gold accent for
+  "Conquistas", sticky blurred header with navigation, Home **hero** with a featured-video CTA,
+  refined video cards (hover play overlay, category badges), and carousel **prev/next arrows**.
+- **Functional "Novo vídeo" page** — form (title, category, YouTube URL) with validation that
+  adds videos to a local list persisted in `localStorage` (`timaoflix:userVideos`).
+- New components with tests: `HeroTimao`, `NavLinkTimao`, `BadgeTimao`.
+
+### Changed
+
+- `colours.css` extended (surfaces, text scale, gold, shadows, radii); `reset.css` uses the new
+  tokens and a real `rem` scale.
+- Test suite grew to **33 tests across 17 suites** (hero, nav link, badge, carousel arrows,
+  form validation).
+- `AGENTS.md` debt updated: the legacy root font-size hack is removed (resolved); new debt
+  notes `localStorage` persistence and the deep-route 404 on Pages.
+
 ### Security
 
 - **`npm audit` is now at 0 vulnerabilities** — the migration from the EOL Create React App
