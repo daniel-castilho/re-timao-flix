@@ -63,19 +63,19 @@ const WatchButton = styled.button`
   border-radius: 0.25rem;
   font-weight: bold;
   font-size: 1rem;
-  color: #fff;
-  background-color: var(--color-primary-medium);
+  color: var(--color-black-dark);
+  background-color: var(--color-primary-light);
   cursor: pointer;
   transition:
     background-color 0.15s ease,
     transform 0.15s ease;
 
   &:hover {
-    background-color: var(--color-primary-light);
+    background-color: var(--color-gray-light);
   }
 
   &:focus-visible {
-    outline: 3px solid var(--color-primary-light);
+    outline: 3px solid var(--color-primary-medium);
     outline-offset: 2px;
   }
 `;

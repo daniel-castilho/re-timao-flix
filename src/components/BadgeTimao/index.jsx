@@ -8,7 +8,7 @@ const Badge = styled.span`
   font-weight: bold;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--color-gray-light);
+  color: var(--color-black-dark);
   background-color: var(--color-primary-medium);
 
   /* Gold accent for the club's trophy category */

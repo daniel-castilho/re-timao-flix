@@ -59,10 +59,9 @@ src/
 │   └── NovoVideo/        "New video" form page (title/category/YouTube URL)
 ├── data/                 Static, module-level data (e.g. videos.js catalog)
 ├── lib/                  Pure, framework-free helpers (youtube.js, text.js) — unit-tested
-├── hooks/                React hooks (useTheme) — no JSX, no styles
 ├── styles/
 │   ├── reset.css         Meyer reset (global)
-│   └── settings/colours.css  Design tokens (--color-*, incl. [data-theme='light'])
+│   └── settings/colours.css  Design tokens (--color-*, always-dark palette)
 ├── setupTests.js         jest-dom matchers (Vitest setup)
 └── *.test.jsx            Colocated test suites (one per component/page)
 ```

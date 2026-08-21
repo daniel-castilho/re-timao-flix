@@ -114,12 +114,13 @@ timaoflix/
 - No backend — static SPA bundle only (client-side routing on GitHub Pages serves only `/`;
   deep-route refreshes 404 on Pages, navigate from the home page or use HashRouter for full
   robustness).
-- `localStorage` persistence (`timaoflix:userVideos` for videos, `timaoflix:theme` for the
-  theme) has no migration/version key — fine for a study project, worth versioning if the shapes
-  evolve.
+- `localStorage` persistence (`timaoflix:userVideos` for user-added videos) has no
+  migration/version key — fine for a study project, worth versioning if the shape evolves.
 - Accessibility is largely addressed (skip link, focus-visible, reduced-motion, real rem scale,
-  axe checks, a fully trapped and restoring modal dialog); a colour-contrast audit of the gold
-  badge and muted text in both themes is still open.
+  axe checks, a fully trapped and restoring modal dialog); the dark palette passed a WCAG AA
+  contrast audit (badges, CTAs and muted text). One observation stands: decorative card/input
+  borders (`--color-surface-border`) are below 3:1 vs `--color-surface`, which WCAG does not
+  require because text and focus indicators identify the controls.
 
 ## Notes
 

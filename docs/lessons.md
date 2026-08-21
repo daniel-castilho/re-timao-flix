@@ -124,3 +124,18 @@ focus itself — ignoring the component's `Tab` keydown handler, its `preventDef
 `fireEvent.keyDown(element, { key: 'Tab', shiftKey: true })` and assert on
 `document.activeElement` / `toHaveFocus()`. Keep `userEvent` for clicks and non-navigation keys
 (e.g. `{Escape}`); never assert tab order through `userEvent.tab()` against a custom trap.
+
+---
+
+## White-on-brand-blue fails WCAG AA at normal text sizes (2026-08-21)
+
+The dark redesign shipped two failing pairs that "looked fine": white text on the brand blue
+`#2a7ae4` measured **4.20:1** (CTA buttons) and light-gray on blue **3.70:1** (category badges) —
+both below the 4.5:1 required for normal-size text. The gold badge passed only because its ink
+is near-black (8.72:1). The fix followed the pattern that already worked: bright accent
+background + near-black ink (`--color-black-dark` on `--color-primary-light` = 6.62:1).
+
+**Rule:** never assume white-on-accent passes AA — compute the ratio for every fg/bg token pair
+when a colour pairing is introduced or changed (a 20-line Node script over `colours.css` is
+enough; no dependency needed). For bright accent backgrounds, prefer near-black ink over white;
+reserve white text for large/bold-only pairings that actually clear 3:1.

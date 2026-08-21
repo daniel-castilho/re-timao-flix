@@ -18,8 +18,9 @@ All notable changes to this project are documented in this file. The format is b
   cards and the hero "Assistir" button (Escape/overlay/button close, body scroll lock) with a
   **full focus trap**: Tab/Shift+Tab cycle inside the dialog, initial focus lands on the close
   button and focus returns to the trigger element on close.
-- **Light theme** — `ThemeToggleTimao` + `useTheme` (persisted, defaults to system preference);
-  `colours.css` gains a `[data-theme='light']` token block.
+- **Always-dark UI** — the deep-graphite palette is the only theme (no light/dark toggle);
+  `colours.css` sets `color-scheme: dark` so native widgets follow, and the palette passed a
+  WCAG AA contrast audit (badges, CTA buttons, muted text, error text).
 - **Search** — Home title search (accent/case-insensitive via `src/lib/text.js`) with a
   no-results message.
 - **Rotating hero** — three featured videos (one per category) rotate every 6 s, honouring
@@ -31,15 +32,21 @@ All notable changes to this project are documented in this file. The format is b
 
 ### Changed
 
-- `colours.css` extended (surfaces, text scale, gold, shadows, radii, header background token,
-  light-theme block); `reset.css` uses the new tokens and a real `rem` scale.
+- `colours.css` extended (surfaces, text scale, gold, shadows, radii, header background token);
+  `reset.css` uses the new tokens and a real `rem` scale.
+- **Contrast fixes from the WCAG AA audit:** category badges now use near-black ink on the
+  brand blue (was light gray on blue, 3.70:1 → 4.64:1) and the primary CTA buttons (hero
+  "Assistir", form submit) use near-black ink on `--color-primary-light`, inverting to a light
+  surface on hover (was white on blue, 4.20:1 → 6.62:1).
+- The opt-in light theme and `ThemeToggleTimao`/`useTheme` were removed before release — the UI
+  is always dark; the `timaoflix:theme` localStorage key no longer exists.
 - `VideoCardTimao` is now a button that opens the player modal (no more `target="_blank"` cards);
   the external YouTube link moved into the modal footer.
-- Test suite grew to **57 tests across 22 suites** (lib, modal + focus trap, theme toggle,
-  search, hero rotation, axe checks).
+- Test suite stands at **54 tests across 21 suites** (lib, modal + focus trap, search, hero
+  rotation, axe checks).
 - `AGENTS.md` debt updated: the legacy root font-size hack is removed (resolved); the modal
-  focus-trap debt is resolved; remaining debt notes `localStorage` persistence and the
-  deep-route 404 on Pages.
+  focus-trap debt and the colour-contrast audit are resolved; remaining debt notes
+  `localStorage` persistence, the deep-route 404 on Pages and decorative border contrast.
 
 ### Security
 

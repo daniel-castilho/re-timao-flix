@@ -169,8 +169,9 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Redesigned dark streaming UI** — refined "TimãoFlix" visual identity: deep-graphite palette
   (`#0b0d0f` / `#1a2027`), gold accent for the "Conquistas" category, sticky blurred header with
   navigation, and a **hero** on the Home page featuring a curated video with a watch CTA.
-- **Light theme** — a theme toggle in the header switches the palette to a light variant,
-  persisted in `localStorage` (`timaoflix:theme`) and defaulting to the system preference.
+- **Always-dark streaming UI** — the deep-graphite palette (`#0b0d0f` / `#1a2027`) is the only
+  theme (no light/dark toggle); native widgets follow via `color-scheme: dark`. The palette
+  passed a WCAG AA contrast audit (badges, CTA buttons, muted text, error text).
 - **Embedded video player** — clicking a card (or the hero "Assistir") opens a modal with a
   privacy-enhanced YouTube player (`youtube-nocookie`) instead of leaving the page; close via
   button, overlay click or Escape. Keyboard focus is fully trapped inside the dialog (Tab and
@@ -192,7 +193,7 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) with a
   real `rem` scale (no root font-size hack; the legacy 1px hack was removed in the a11y pass).
 - Component-level tests for every component + page/data/lib suites + App composition smoke test
-  - **axe accessibility checks** (57 tests, 22 suites), GitHub Actions CI (install → test →
+  - **axe accessibility checks** (54 tests, 21 suites), GitHub Actions CI (install → test →
     coverage summary → build → audit gate) on a Node 22 + 24 matrix.
 - **GitHub Pages deployment** configured via `.github/workflows/deploy.yml` (build with
   `base: '/re-timao-flix/'` → upload `dist/` → publish). Live once Pages is enabled with
@@ -205,4 +206,7 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 Deliberately not implemented yet (candidate backlog):
 
 - Detail cards / dedicated video page.
-- Colour-contrast audit (gold badge, muted text) and full keyboard-navigation pass.
+- Full keyboard-navigation sweep across every interactive surface (the player modal already
+  traps and restores focus; skip links and focus-visible are in place).
+- Lighten `--color-surface-border` toward 3:1 vs `--color-surface` (decorative borders are
+  exempt from WCAG today, but closing the gap would future-proof new UI).
