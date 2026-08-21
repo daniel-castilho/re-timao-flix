@@ -62,7 +62,7 @@ const Row = styled.ul`
   scroll-snap-type: x proximity;
 `;
 
-function VideoSectionTimao({ title, videos }) {
+function VideoSectionTimao({ title, videos, onOpen }) {
   const rowRef = useRef(null);
 
   const scrollByCards = (direction) => {
@@ -96,7 +96,7 @@ function VideoSectionTimao({ title, videos }) {
       <Row ref={rowRef}>
         {videos.map((video) => (
           <li key={video.id}>
-            <VideoCardTimao video={video} />
+            <VideoCardTimao video={video} onOpen={onOpen} />
           </li>
         ))}
       </Row>

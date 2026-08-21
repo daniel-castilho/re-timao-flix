@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import videos from '../../data/videos';
+import { extractYouTubeId } from '../../lib/youtube';
 
 const STORAGE_KEY = 'timaoflix:userVideos';
 
@@ -143,13 +144,6 @@ function loadUserVideos() {
 
 function saveUserVideos(list) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-}
-
-function extractYouTubeId(url) {
-  const match = url.match(
-    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{6,})/,
-  );
-  return match ? match[1] : null;
 }
 
 function slugify(text) {

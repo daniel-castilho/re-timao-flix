@@ -31,6 +31,7 @@ const videos = [
     thumbnailUrl: 'https://img.youtube.com/vi/z1btmrYcurs/hqdefault.jpg',
   },
   {
+    featured: true,
     id: 'invasao-maracana-1976',
     title: 'Especial Invasão do Maracanã 1976 (TV Cultura)',
     category: 'História',
@@ -59,6 +60,7 @@ const videos = [
     thumbnailUrl: 'https://img.youtube.com/vi/ZR7AfMr_ZYM/hqdefault.jpg',
   },
   {
+    featured: true,
     id: 'fundo-do-poco-ao-topo',
     title: 'Do fundo do poço ao topo do mundo (2007–2012)',
     category: 'Documentários',

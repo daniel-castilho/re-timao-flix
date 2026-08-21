@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 import BadgeTimao from '../BadgeTimao';
 
-const CardLink = styled.a`
+const CardButton = styled.button`
   display: block;
   position: relative;
   flex: 0 0 auto;
   width: 15rem;
-  text-decoration: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
   color: var(--color-gray-light);
 
   &:focus-visible {
@@ -28,7 +33,7 @@ const ThumbWrap = styled.div`
       transform 0.2s ease;
   }
 
-  ${CardLink}:hover & {
+  ${CardButton}:hover & {
     box-shadow: var(--shadow-card-hover);
     transform: translateY(-2px);
   }
@@ -54,8 +59,8 @@ const PlayOverlay = styled.span`
     transition: opacity 0.2s ease;
   }
 
-  ${CardLink}:hover &,
-  ${CardLink}:focus-visible & {
+  ${CardButton}:hover &,
+  ${CardButton}:focus-visible & {
     opacity: 1;
   }
 `;
@@ -78,18 +83,6 @@ const CardBadge = styled(BadgeTimao)`
   left: 0.5rem;
 `;
 
-const NewTabHint = styled.span`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-`;
-
 const CardTitle = styled.h3`
   font-size: 0.875rem;
   font-weight: bold;
@@ -101,11 +94,15 @@ const CardTitle = styled.h3`
   overflow: hidden;
 `;
 
-function VideoCardTimao({ video }) {
+function VideoCardTimao({ video, onOpen }) {
   const gold = video.category === 'Conquistas';
 
   return (
-    <CardLink href={video.url} target="_blank" rel="noreferrer">
+    <CardButton
+      type="button"
+      aria-label={`Assistir: ${video.title}`}
+      onClick={() => onOpen(video)}
+    >
       <ThumbWrap>
         <Thumb src={video.thumbnailUrl} alt="" />
         <PlayOverlay aria-hidden="true">
@@ -114,8 +111,7 @@ function VideoCardTimao({ video }) {
         {video.category && <CardBadge gold={gold}>{video.category}</CardBadge>}
       </ThumbWrap>
       <CardTitle>{video.title}</CardTitle>
-      <NewTabHint>(abre em uma nova aba)</NewTabHint>
-    </CardLink>
+    </CardButton>
   );
 }
 

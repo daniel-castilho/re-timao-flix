@@ -114,10 +114,15 @@ timaoflix/
 - No backend — static SPA bundle only (client-side routing on GitHub Pages serves only `/`;
   deep-route refreshes 404 on Pages, navigate from the home page or use HashRouter for full
   robustness).
-- "Novo vídeo" persistence uses `localStorage` (`timaoflix:userVideos`) with no migration/version
-  key — fine for a study project, worth versioning if the shape evolves.
-- Accessibility is largely addressed (skip link, focus-visible, reduced-motion, real rem scale);
-  an audit of colour contrast on the gold badge and muted text is still open.
+- `localStorage` persistence (`timaoflix:userVideos` for videos, `timaoflix:theme` for the
+  theme) has no migration/version key — fine for a study project, worth versioning if the shapes
+  evolve.
+- Accessibility is largely addressed (skip link, focus-visible, reduced-motion, real rem scale,
+  axe checks); a colour-contrast audit of the gold badge and muted text in both themes is still
+  open.
+- The embedded player modal does not implement a full focus trap (focus moves to the close
+  button and Escape closes; tab can still escape the dialog) — acceptable for a study project,
+  worth hardening with a proper trap or a dialog library later.
 
 ## Notes
 

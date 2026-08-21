@@ -55,12 +55,14 @@ src/
 │   ├── VideoCardTimao/   Card for a single video (thumb + title, opens YouTube)
 │   └── VideoSectionTimao  Section (carousel) rendering a category of videos
 ├── pages/                Route-level components (composition only)
-│   ├── Home/             Landing page — one VideoSectionTimao per category
-│   └── NovoVideo/        "New video" placeholder page
+│   ├── Home/             Landing page — search, hero, one VideoSectionTimao per category
+│   └── NovoVideo/        "New video" form page (title/category/YouTube URL)
 ├── data/                 Static, module-level data (e.g. videos.js catalog)
+├── lib/                  Pure, framework-free helpers (youtube.js, text.js) — unit-tested
+├── hooks/                React hooks (useTheme) — no JSX, no styles
 ├── styles/
 │   ├── reset.css         Meyer reset (global)
-│   └── settings/colours.css  Design tokens (--color-*)
+│   └── settings/colours.css  Design tokens (--color-*, incl. [data-theme='light'])
 ├── setupTests.js         jest-dom matchers (Vitest setup)
 └── *.test.jsx            Colocated test suites (one per component/page)
 ```
@@ -70,8 +72,9 @@ src/
 | Layer         | Responsibility                                                                | Imports allowed                                              |
 | ------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | `components/` | Pure presentational UI (props in → JSX out)                                   | styled-components, other components, `../data/*` (read-only) |
-| `pages/`      | Route composition; may fetch/hold page-level state                            | `../components/*`, `../data/*`                               |
+| `pages/`      | Route composition; may fetch/hold page-level state                            | `../components/*`, `../data/*`, `../lib/*`, `../hooks/*`     |
 | `data/`       | Static data + **pure helpers** (e.g. `groupVideosByCategory`) — no UI imports | —                                                            |
+| `lib/`        | Pure framework-free helpers only — no React, no JSX, no styles                | —                                                            |
 
 - **No business logic in components** — keep JSX thin; derive helpers as plain functions or
   modules (see `groupVideosByCategory` extracted from `Home` in commit `7e2d2f5`). Pure data

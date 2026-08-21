@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import VideoCardTimao from '.';
 
 const video = {
@@ -8,19 +9,22 @@ const video = {
   thumbnailUrl: 'https://img.youtube.com/vi/Bui2mO6AbxA/hqdefault.jpg',
 };
 
-test('renders an external link named by the video title', () => {
-  render(<VideoCardTimao video={video} />);
+test('renders a button with the video title and thumbnail', () => {
+  render(<VideoCardTimao video={video} onOpen={() => {}} />);
 
-  const link = screen.getByRole('link', {
-    name: `${video.title} (abre em uma nova aba)`,
+  const button = screen.getByRole('button', {
+    name: `Assistir: ${video.title}`,
   });
-  expect(link).toHaveAttribute('href', video.url);
-  expect(link).toHaveAttribute('target', '_blank');
-  expect(link).toHaveAttribute('rel', 'noreferrer');
+  expect(button.tagName).toBe('BUTTON');
+  expect(screen.getByRole('img')).toHaveAttribute('alt', '');
+  expect(screen.getByText(video.title)).toBeInTheDocument();
 });
 
-test('keeps the thumbnail decorative so the title is announced once', () => {
-  const { container } = render(<VideoCardTimao video={video} />);
+test('calls onOpen with the video when clicked', async () => {
+  const user = userEvent.setup();
+  const onOpen = vi.fn();
+  render(<VideoCardTimao video={video} onOpen={onOpen} />);
 
-  expect(container.querySelector('img')).toHaveAttribute('alt', '');
+  await user.click(screen.getByRole('button', { name: /assistir:/i }));
+  expect(onOpen).toHaveBeenCalledWith(video);
 });

@@ -169,10 +169,18 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Redesigned dark streaming UI** — refined "TimãoFlix" visual identity: deep-graphite palette
   (`#0b0d0f` / `#1a2027`), gold accent for the "Conquistas" category, sticky blurred header with
   navigation, and a **hero** on the Home page featuring a curated video with a watch CTA.
+- **Light theme** — a theme toggle in the header switches the palette to a light variant,
+  persisted in `localStorage` (`timaoflix:theme`) and defaulting to the system preference.
+- **Embedded video player** — clicking a card (or the hero "Assistir") opens a modal with a
+  privacy-enhanced YouTube player (`youtube-nocookie`) instead of leaving the page; close via
+  button, overlay click or Escape.
 - **Video catalog with Netflix-style carousels:** `src/data/videos.js` curates 12 real videos
-  (official channels and documented productions) grouped into categories; the Home page renders
-  one horizontal carousel per category (`VideoSectionTimao` + `VideoCardTimao`) with
+  grouped into categories; the Home page renders one horizontal carousel per category with
   **prev/next arrow navigation**, hover play overlays and category badges.
+- **Search** — a title search box on the Home page filters the catalog (accent- and
+  case-insensitive), with a no-results message.
+- **Rotating hero** — three featured videos (one per category) rotate every few seconds
+  (auto-rotation respects `prefers-reduced-motion`), with dots and prev/next controls.
 - **Client-side routing** with `react-router` 7: Home (`/`), Novo Vídeo (`/novo-video`),
   catch-all back to Home; the header has a navigation (Início + Novo vídeo).
 - **Novo vídeo page is functional** — a form (title, category, YouTube URL) with validation
@@ -181,9 +189,9 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
   testing-library 14.
 - **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) with a
   real `rem` scale (no root font-size hack; the legacy 1px hack was removed in the a11y pass).
-- Component-level tests for every component + page/data suites + App composition smoke test
-  (33 tests, 17 suites), GitHub Actions CI (install → test → coverage summary → build → audit
-  gate) on a Node 22 + 24 matrix.
+- Component-level tests for every component + page/data/lib suites + App composition smoke test
+  - **axe accessibility checks** (53 tests, 22 suites), GitHub Actions CI (install → test →
+    coverage summary → build → audit gate) on a Node 22 + 24 matrix.
 - **GitHub Pages deployment** configured via `.github/workflows/deploy.yml` (build with
   `base: '/re-timao-flix/'` → upload `dist/` → publish). Live once Pages is enabled with
   "Source: GitHub Actions" in the repository settings; see

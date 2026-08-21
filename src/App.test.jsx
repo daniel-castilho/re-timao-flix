@@ -1,6 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import App from './App';
+
+afterEach(() => {
+  delete document.documentElement.dataset.theme;
+  localStorage.clear();
+});
 
 function renderApp(initialEntries) {
   return render(
@@ -52,4 +58,15 @@ test('renders a navigation link back to the home page', () => {
 
   const homeLink = screen.getByRole('link', { name: 'Início' });
   expect(homeLink).toHaveAttribute('href', '/');
+});
+
+test('toggles the theme via the header button', async () => {
+  const user = userEvent.setup();
+  renderApp(['/']);
+
+  const toggle = screen.getByRole('button', { name: 'Ativar tema claro' });
+  await user.click(toggle);
+
+  expect(document.documentElement.dataset.theme).toBe('light');
+  expect(localStorage.getItem('timaoflix:theme')).toBe('light');
 });

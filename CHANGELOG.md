@@ -14,13 +14,27 @@ All notable changes to this project are documented in this file. The format is b
 - **Functional "Novo vídeo" page** — form (title, category, YouTube URL) with validation that
   adds videos to a local list persisted in `localStorage` (`timaoflix:userVideos`).
 - New components with tests: `HeroTimao`, `NavLinkTimao`, `BadgeTimao`.
+- **Embedded video player** — `VideoModalTimao` opens a `youtube-nocookie` iframe modal from
+  cards and the hero "Assistir" button (Escape/overlay/button close, body scroll lock).
+- **Light theme** — `ThemeToggleTimao` + `useTheme` (persisted, defaults to system preference);
+  `colours.css` gains a `[data-theme='light']` token block.
+- **Search** — Home title search (accent/case-insensitive via `src/lib/text.js`) with a
+  no-results message.
+- **Rotating hero** — three featured videos (one per category) rotate every 6 s, honouring
+  `prefers-reduced-motion`, with dots and prev/next controls.
+- **Accessibility checks** — `src/a11y.test.jsx` runs axe-core (via `vitest-axe`) against App,
+  Home and NovoVideo; `globals.vitest` added to the ESLint test config.
+- Shared pure helpers with tests: `src/lib/youtube.js` (id extraction, embed URLs) and
+  `src/lib/text.js` (normalization).
 
 ### Changed
 
-- `colours.css` extended (surfaces, text scale, gold, shadows, radii); `reset.css` uses the new
-  tokens and a real `rem` scale.
-- Test suite grew to **33 tests across 17 suites** (hero, nav link, badge, carousel arrows,
-  form validation).
+- `colours.css` extended (surfaces, text scale, gold, shadows, radii, header background token,
+  light-theme block); `reset.css` uses the new tokens and a real `rem` scale.
+- `VideoCardTimao` is now a button that opens the player modal (no more `target="_blank"` cards);
+  the external YouTube link moved into the modal footer.
+- Test suite grew to **53 tests across 22 suites** (lib, modal, theme toggle, search, hero
+  rotation, axe checks).
 - `AGENTS.md` debt updated: the legacy root font-size hack is removed (resolved); new debt
   notes `localStorage` persistence and the deep-route 404 on Pages.
 

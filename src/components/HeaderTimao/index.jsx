@@ -11,7 +11,7 @@ const HeaderTimao = styled.header`
   align-items: center;
   gap: 1rem;
   padding: 1.125rem 2.5rem;
-  background-color: rgba(11, 13, 15, 0.85);
+  background-color: var(--color-header-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 2px solid var(--color-primary-medium);
