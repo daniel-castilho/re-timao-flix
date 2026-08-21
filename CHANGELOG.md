@@ -4,6 +4,58 @@ All notable changes to this project are documented in this file. The format is b
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0](https://github.com/daniel-castilho/re-timao-flix/compare/v0.1.0...v0.2.0) (2026-08-21)
+
+
+### Added
+
+* **a11y:** accessibility pass with real rem scale ([d2f4e08](https://github.com/daniel-castilho/re-timao-flix/commit/d2f4e08a08418a89ff402ff140045d50660aac49))
+* **a11y:** full focus trap in the video player modal ([ca17a44](https://github.com/daniel-castilho/re-timao-flix/commit/ca17a444b97b768248db708c34e6ad877ca6d3fe))
+* **app:** video detail page, versioned storage and Pages deep-route fix ([89c4774](https://github.com/daniel-castilho/re-timao-flix/commit/89c477449a8e02f247f69bdfb57ff37b784ea7db))
+* **home:** add curated video catalog with Netflix-style carousels ([35504a1](https://github.com/daniel-castilho/re-timao-flix/commit/35504a16045c6f6245cb1935a95f6879c9fe1033))
+* **routing:** add react-router with Home and NovoVideo pages ([42711f7](https://github.com/daniel-castilho/re-timao-flix/commit/42711f7b66bb90007b6315c80f33952f0b336660))
+* **storage:** export/import of user videos as versioned JSON ([c5de865](https://github.com/daniel-castilho/re-timao-flix/commit/c5de8659f3c54b7b5ad995a489db9b410ed45610))
+* **ui:** always-dark UI with WCAG AA contrast fixes ([c729219](https://github.com/daniel-castilho/re-timao-flix/commit/c72921923f18039c22b40ac965208c973e82d871))
+* **ui:** dark streaming redesign with hero, carousel arrows and video form ([b5198c3](https://github.com/daniel-castilho/re-timao-flix/commit/b5198c3b7847b117ac252a80db637ec9d1948a81))
+* **ui:** embedded player, search, rotating hero, light theme and a11y checks ([84d3fe6](https://github.com/daniel-castilho/re-timao-flix/commit/84d3fe61d30ab0e5ab0972b62fbcfd9d90426b49))
+
+
+### Fixed
+
+* **build:** restore react-scripts 5.0.1 after phantom 0.0.0 audit-fix ([dcd69cd](https://github.com/daniel-castilho/re-timao-flix/commit/dcd69cd70c1af1615b3202d0afd50a69473117de))
+
+
+### Changed
+
+* **naming:** rename PT-BR identifiers to English (i18n-ready) ([c50148c](https://github.com/daniel-castilho/re-timao-flix/commit/c50148c639757218e84aa4a7fbd719b3a66926e2))
+* **srp:** extract groupVideosByCategory; remove noise comment and dead lookup ([7e2d2f5](https://github.com/daniel-castilho/re-timao-flix/commit/7e2d2f5ba9d8f957cbe70058a54ac065c27ad38f))
+
+
+### Documentation
+
+* add CI, AGENTS, lessons, changelog and rewrite README ([554775b](https://github.com/daniel-castilho/re-timao-flix/commit/554775b082d7b880e5f9287f47cee54be2f5dc4c))
+* add coding standards reference ([fee098a](https://github.com/daniel-castilho/re-timao-flix/commit/fee098a309d57bcb8e526d8fd4b5eee48ca56846))
+* add docs suite and GitHub Pages deploy workflow ([85608e0](https://github.com/daniel-castilho/re-timao-flix/commit/85608e0bc098736482c49fcd675a0095bc07ecc9))
+* add docs suite and GitHub Pages deploy workflow ([61e2233](https://github.com/daniel-castilho/re-timao-flix/commit/61e22335b51989538e9dddf11028c3e443149892))
+* add testing playbook and wire cross-references ([ddaa59b](https://github.com/daniel-castilho/re-timao-flix/commit/ddaa59b3204ffb415b437b6fcaf9e61358fe5dc4))
+* sync docs for coding standards adoption and rem unification ([4fd28a8](https://github.com/daniel-castilho/re-timao-flix/commit/4fd28a846a1e8fbb9ccbfc39dacf24db03ab80ba))
+
+
+### Continuous Integration
+
+* bump actions/checkout and actions/setup-node to v6 (node24 runtime) ([e4b8ed7](https://github.com/daniel-castilho/re-timao-flix/commit/e4b8ed75df7cc5c8a5cfff33977f8357d7a35b4a))
+* **coverage:** enforce v8 coverage thresholds as a merge gate ([6ad2204](https://github.com/daniel-castilho/re-timao-flix/commit/6ad2204939a906dd2aaed465f97884d713e8bf4c))
+* **release:** automate versioning and GitHub Releases via Release Please ([0fee143](https://github.com/daniel-castilho/re-timao-flix/commit/0fee1433e1da8e0b81601668428901ebd6b23cc6))
+* run tests on a Node 22+24 matrix with an informational coverage step ([fc4aa4a](https://github.com/daniel-castilho/re-timao-flix/commit/fc4aa4ac5c28b08f3f5f4109e2a0a0a9285c549d))
+
+
+### Miscellaneous
+
+* **deploy:** track deployment readiness reference; harden dotenv gitignore ([2af61bf](https://github.com/daniel-castilho/re-timao-flix/commit/2af61bf368ed3a76c92d90040d398917d47c75b7))
+* remove stray backup artifacts; ignore *.bak.* ([55cbe39](https://github.com/daniel-castilho/re-timao-flix/commit/55cbe39579240ca42073f7c030c5cdc9d8a3cd63))
+* **style:** add ESLint 10 + Prettier with CI gates ([7d957f7](https://github.com/daniel-castilho/re-timao-flix/commit/7d957f7a4eb5fff82602e257f3fe9fdcb5a784f0))
+* **toolchain:** approve esbuild install script via npm allowScripts ([3401575](https://github.com/daniel-castilho/re-timao-flix/commit/3401575b6c32e880e2a8fd356bfa1d9cc5c0d347))
+
 ## [Unreleased]
 
 ### Added
