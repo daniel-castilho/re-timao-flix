@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const CardLink = styled.a`
   flex: 0 0 auto;
-  width: 240px;
+  width: 240rem;
   text-decoration: none;
   color: var(--color-gray-light);
 `;
@@ -10,7 +10,7 @@ const CardLink = styled.a`
 const Thumb = styled.img`
   display: block;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 4rem;
   background-color: var(--color-black-dark);
   transition: transform 0.2s ease;
 

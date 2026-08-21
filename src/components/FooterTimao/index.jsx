@@ -9,7 +9,7 @@ const FooterTimao = styled.footer`
   background-color: var(--color-black-dark);
   color: var(--color-gray-light);
   padding: 20rem 0;
-  border-top: 4px solid var(--color-primary-medium);
+  border-top: 4rem solid var(--color-primary-medium);
 
   & > ${LogoTimao} {
     margin-bottom: 20rem;

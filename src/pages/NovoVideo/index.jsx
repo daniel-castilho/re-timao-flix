@@ -3,7 +3,7 @@ import HighlightTimao from '../../components/HighlightTimao';
 
 const NovoVideoSection = styled.section`
   flex: 1;
-  padding: 40px;
+  padding: 40rem;
   background-color: var(--color-black-dark);
   color: var(--color-gray-light);
 `;

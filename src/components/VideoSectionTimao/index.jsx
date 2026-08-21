@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import VideoCardTimao from '../VideoCardTimao';
 
 const Section = styled.section`
-  padding: 20rem 40px;
+  padding: 20rem 40rem;
 `;
 
 const SectionTitle = styled.h2`
