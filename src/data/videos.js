@@ -88,3 +88,10 @@ const videos = [
 ];
 
 export default videos;
+
+export function groupVideosByCategory(videoList) {
+  return [...new Set(videoList.map((video) => video.category))].map((category) => ({
+    category,
+    videos: videoList.filter((video) => video.category === category),
+  }));
+}

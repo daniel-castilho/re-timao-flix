@@ -13,6 +13,10 @@ All notable changes to this project are documented in this file. The format is b
   the family are fully out of the tree.
 
 ### Changed
+- Clean Code pass: video data fields and component props renamed to English
+  (`title`, `category`, `thumbnailUrl`); category grouping extracted into the pure helper
+  `groupVideosByCategory` (unit-tested) so `Home` is presentation-only; noise comment and a
+  duplicated DOM lookup removed.
 - **Toolchain migrated from Create React App to Vite:** `react-scripts` 5.0.1 → `vite` 7.3.6 +
   `@vitejs/plugin-react` 5.2; CRA's embedded Jest → `vitest` 3.2.7; `jsdom` 29 test
   environment. React 18 + styled-components 5 code moved over unchanged.

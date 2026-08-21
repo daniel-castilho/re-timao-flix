@@ -9,7 +9,6 @@ import LinkTimao from './components/LinkTimao';
 import Home from './pages/Home';
 import NovoVideo from './pages/NovoVideo';
 
-// JSX = (J)ava(S)cript (X)ML
 function App() {
   return (
     <>

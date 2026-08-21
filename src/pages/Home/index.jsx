@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import HighlightTimao from '../../components/HighlightTimao';
 import VideoSectionTimao from '../../components/VideoSectionTimao';
-import videos from '../../data/videos';
+import videos, { groupVideosByCategory } from '../../data/videos';
 
 const HomeSection = styled.section`
     flex: 1;
@@ -21,7 +21,7 @@ const Tagline = styled.p`
     padding: 0 40px;
 `;
 
-const categories = [...new Set(videos.map((video) => video.category))];
+const sections = groupVideosByCategory(videos);
 
 function Home() {
   return (
@@ -31,12 +31,8 @@ function Home() {
         Os melhores momentos do <HighlightTimao>Timão</HighlightTimao> em um só lugar.
       </Tagline>
 
-      {categories.map((category) => (
-        <VideoSectionTimao
-          key={category}
-          title={category}
-          videos={videos.filter((video) => video.category === category)}
-        />
+      {sections.map(({ category, videos: sectionVideos }) => (
+        <VideoSectionTimao key={category} title={category} videos={sectionVideos} />
       ))}
     </HomeSection>
   );

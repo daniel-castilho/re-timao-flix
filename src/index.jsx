@@ -6,12 +6,12 @@ import App from './App.jsx';
 import './styles/settings/colours.css';
 import './styles/reset.css'
 
-const root = createRoot(document.getElementById('root'));
-root.render(
+const rootElement = document.getElementById('root');
+
+createRoot(rootElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
