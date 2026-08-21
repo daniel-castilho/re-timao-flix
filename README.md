@@ -35,7 +35,7 @@ Portuguese.
 | **Styling** | ![styled-components](https://img.shields.io/badge/styled--components-5-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) + CSS custom properties |
 | **Build tooling** | ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white) + `@vitejs/plugin-react` |
 | **Testing** | ![Vitest](https://img.shields.io/badge/Vitest-3-6E9F18?style=for-the-badge&logo=vitest&logoColor=white) + Testing Library (`react` 14, `jest-dom` 6, `user-event` 14) |
-| **CI** | GitHub Actions (Node 24, npm 11.17.0) |
+| **CI** | GitHub Actions (Node 22 + 24 matrix, npm 11.17.0) |
 
 - **No runtime dependencies beyond React and styled-components** — the app is static and
   dependency-light at runtime.
@@ -152,7 +152,8 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
   testing-library 14.
 - Component-level tests for every styled-component primitive + App composition smoke test
-  (10 tests, 7 suites), GitHub Actions CI (install → test → build → audit gate) on Node 24.
+  (10 tests, 7 suites), GitHub Actions CI (install → test → coverage summary → build → audit
+  gate) on a Node 22 + 24 matrix.
 - `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
 ## Roadmap

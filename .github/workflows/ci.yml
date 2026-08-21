@@ -10,21 +10,26 @@ permissions:
 
 jobs:
   test-build:
-    name: Test & Build (Node 24)
+    name: Test & Build (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Node 20 is EOL (Apr 2026); Vite 7 requires ^20.19 || >=22.12.
+        node-version: [22, 24]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js (from .nvmrc)
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version: ${{ matrix.node-version }}
           cache: npm
 
       # The lockfile was generated with npm 11.17.0. Lockfile resolution is
       # npm-version-sensitive (see docs/lessons.md), so pin the exact npm that
-      # produced it to keep `npm ci` deterministic on CI.
+      # produced it to keep `npm ci` deterministic on every matrix leg.
       - name: Pin npm to the lockfile's generator version
         run: npm install --global npm@11.17.0
 
@@ -33,6 +38,10 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      # Informational only — no thresholds yet; the summary lands in the job log.
+      - name: Test coverage summary
+        run: npm run test:coverage -- --coverage.reporter=text-summary
 
       - name: Build production bundle
         run: npm run build
