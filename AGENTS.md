@@ -8,7 +8,8 @@ Library, Node 24 (see `.nvmrc`), npm 11.17.0. No backend, no state management.
 The **UI copy is Brazilian Portuguese** (product content). All code, identifiers, comments,
 commit messages, documentation and log messages are in **English**.
 
-Sources of truth (read in order): `README.md`, `AGENTS.md`, `docs/lessons.md`, `package.json`.
+Sources of truth (read in order): `README.md`, `AGENTS.md`, `docs/coding-standards.md`,
+`docs/lessons.md`, `package.json`.
 Re-read the relevant parts before starting any task.
 
 ## Critical rules (never violate)
@@ -111,6 +112,10 @@ timaoflix/
 - No backend, no deployment pipeline — static SPA bundle only (client-side routing needs a
   fallback to `index.html` on static hosts).
 - Accessibility pass not done (semantic HTML, focus states, alt text are partially improvised).
+- `src/styles/reset.css` pins the root font size with `html, body { font-size: 1px }` (CRA-era
+  hack so that `1rem == 1px`; all component sizing relies on it). It silently ignores the
+  user's browser font-size preference — an accessibility issue to resolve together with the
+  accessibility pass (proper fix: real rem scale + converting every value).
 
 ## Notes
 

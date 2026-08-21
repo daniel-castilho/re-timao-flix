@@ -143,9 +143,11 @@ src/
 
   Add new tokens to `colours.css` first; never hardcode a colour hex inside a component.
 
-- Size values in the codebase mix `px` and `rem` (CRA-era legacy, e.g. `30px 40px` in
-  `HeaderTimao` vs `14rem` in `VideoCardTimao`). **Prefer `rem` for new code**; standardize
-  gradually (tracked in `AGENTS.md` debt).
+- All component sizing now uses **`rem`** under the project convention `1rem == 1px` (the
+  `html, body { font-size: 1px }` rule in `reset.css`; see AGENTS debt — flagged as an
+  accessibility issue to resolve with the accessibility pass). Media-query breakpoints stay
+  in `px` (e.g. `@media (max-width: 800px)`): per spec, `rem` inside media queries resolves
+  against the browser's initial root font size (16px), not the project's hack.
 - Styled-components that target another styled component use `& ${Comp}` / `${Comp}:hover &`
   composition (see `VideoCardTimao`); keep those selectors adjacent to the styled block.
 

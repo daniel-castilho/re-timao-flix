@@ -15,6 +15,13 @@ All notable changes to this project are documented in this file. The format is b
 
 ### Changed
 
+- **Sizing unified on `rem`:** the 17 remaining `px` declarations across styled-components
+  (Header, Footer, Button, Logo, VideoCard, VideoSection, Home, NovoVideo) were converted under
+  the established `1rem == 1px` convention (see `html { font-size: 1px }` in `reset.css`) —
+  no visual change. The `@media (max-width: 800px)` breakpoint intentionally stays in `px`
+  (in media queries, `rem` resolves against the browser's initial root font size, not the
+  project's). The root font-size hack itself is now tracked as accessibility debt in
+  `AGENTS.md`.
 - Clean Code pass: video data fields and component props renamed to English
   (`title`, `category`, `thumbnailUrl`); category grouping extracted into the pure helper
   `groupVideosByCategory` (unit-tested) so `Home` is presentation-only; noise comment and a
@@ -39,6 +46,9 @@ All notable changes to this project are documented in this file. The format is b
 
 ### Added
 
+- **Coding standards reference** (`docs/coding-standards.md`): day-to-day conventions for
+  naming, structure, React/Vite, formatting, testing and security; defers to `AGENTS.md` on
+  conflicts and is referenced from it ("Sources of truth").
 - Code style enforcement: ESLint 10 (flat config, `eslint.config.mjs`) + Prettier 3
   (`.prettierrc.json`, single quotes) as devDependencies, with `lint`/`format` scripts and CI
   gates (`npm run lint` + `npm run format:check`) before tests. The vendored Meyer reset is

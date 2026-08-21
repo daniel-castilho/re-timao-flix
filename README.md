@@ -130,13 +130,15 @@ npm run test:watch   # watch mode
 npm run test:coverage  # v8 coverage report
 ```
 
-Current total: **10 tests across 7 suites**, all offline and deterministic (the app has no
+Current total: **20 tests across 13 suites**, all offline and deterministic (the app has no
 network code):
 
 | File                              | Scope                                                                                                             |
 | :-------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
 | `src/App.test.jsx`                | Composition smoke test — header CTA ("Novo vídeo") + Alura credit.                                                |
 | `src/components/*/index.test.jsx` | Per-component suites: correct DOM element, content/props forwarding, `LogoTimao` attrs (alt text, bundled asset). |
+| `src/pages/*/index.test.jsx`      | Route-page suites (Home heading/tagline, Novo Vídeo heading).                                                     |
+| `src/data/videos.test.js`         | Pure unit tests for `groupVideosByCategory`.                                                                      |
 
 Testing conventions (adopted from the sibling project's discipline):
 
@@ -168,9 +170,12 @@ When a data layer arrives, canned responses go under `src/test/fixtures/` and th
   catch-all back to Home; the header CTA is a router link reusing the button styles.
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
   testing-library 14.
-- Component-level tests for every styled-component primitive + App composition smoke test
-  (10 tests, 7 suites), GitHub Actions CI (install → test → coverage summary → build → audit
-  gate) on a Node 22 + 24 matrix.
+- **Coding standards adopted** (`docs/coding-standards.md`, referenced from `AGENTS.md`) and
+  component sizing unified on `rem` (`1rem == 1px` per the reset convention; media-query
+  breakpoints stay `px`). The root font-size hack is tracked as accessibility debt.
+- Component-level tests for every styled-component primitive + page/data suites + App
+  composition smoke test (20 tests, 13 suites), GitHub Actions CI (install → test → coverage
+  summary → build → audit gate) on a Node 22 + 24 matrix.
 - `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
 ## Roadmap
