@@ -24,8 +24,11 @@ Re-read the relevant parts before starting any task.
    placeholders (e.g. `react-scripts@0.0.0`) that zero the audit but break the build — see
    `docs/lessons.md` (phantom 0.0.0 trap). The tree is at **0 vulnerabilities** today; keep it
    honest.
-5. **Tests** run with Vitest: `npm test` (one-shot). Add or extend tests in `src/*.test.jsx`
-   (Vitest auto-discovers them). Never assert on the network — this app has no network code.
+5. **Tests** run with Vitest: `npm test` (one-shot). Component tests are colocated as
+   `index.test.jsx` next to the component; Vitest auto-discovers them. Suites stay fully
+   offline (never assert on the network) and order-independent (no test relies on state left
+   behind by another). When a data layer arrives, fixtures go under `src/test/fixtures/` and
+   the global `fetch` is mocked per test.
 6. **JSX lives in `.jsx` files.** Vite's `@vitejs/plugin-react` transforms JSX in `.jsx`, not in
    `.js` — do not rename `.jsx` files back to `.js`, and name new JSX files `.jsx`. Plain JS
    (no JSX) can stay `.js`.
@@ -72,7 +75,8 @@ timaoflix/
 │   ├── styles/
 │   │   ├── reset.css     Meyer reset (global)
 │   │   └── settings/colours.css  Design tokens (--color-*)
-│   ├── App.test.jsx      Smoke tests (Vitest + jest-dom)
+│   ├── App.test.jsx      App composition smoke test (Vitest + jest-dom)
+│   │                     + per-component suites in components/*/index.test.jsx
 │   └── setupTests.js     jest-dom matchers
 └── vite.config.mjs       Vite + Vitest config (react plugin; jsdom, globals, setupFiles)
 ```
@@ -89,7 +93,6 @@ timaoflix/
 
 ## Known technical debt (resolve later; flag, don't silently fix)
 
-- Test coverage is smoke-level only (App renders) — no per-component assertions.
 - No backend, no routing, no deployment pipeline — static bundle only.
 - Accessibility pass not done (semantic HTML, focus states, alt text are partially improvised).
 

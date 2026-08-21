@@ -26,6 +26,9 @@ All notable changes to this project are documented in this file. The format is b
 - `docs/lessons.md` expanded with the Vite migration lessons.
 
 ### Added
+- Component-level test suites for every styled-component primitive
+  (`src/components/*/index.test.jsx`) alongside the existing App composition smoke test —
+  10 tests across 7 suites, all offline, deterministic and order-independent.
 - Smoke tests (`src/App.test.jsx`, `src/setupTests.js`) — first automated coverage.
 - Project documentation: `AGENTS.md`, `docs/lessons.md`, `CHANGELOG.md`.
 - GitHub Actions CI (`.github/workflows/ci.yml`) on Node 24 with npm pinned to the lockfile's

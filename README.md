@@ -116,10 +116,23 @@ npm test             # one-shot, non-interactive (CI-friendly)
 npm run test:watch   # watch mode
 ```
 
-Current coverage is a smoke test (`src/App.test.jsx`) that renders the app and asserts the header
-CTA ("Novo vídeo") and the Alura credit are present. Add component tests in `src/*.test.jsx`;
-Vitest discovers them automatically. There is no network code, so tests are fully offline and
-deterministic.
+Current total: **10 tests across 7 suites**, all offline and deterministic (the app has no
+network code):
+
+| File | Scope |
+| :--- | :--- |
+| `src/App.test.jsx` | Composition smoke test — header CTA ("Novo vídeo") + Alura credit. |
+| `src/components/*/index.test.jsx` | Per-component suites: correct DOM element, content/props forwarding, `LogoTimao` attrs (alt text, bundled asset). |
+
+Testing conventions (adopted from the sibling project's discipline):
+
+- Tests are **colocated** with the component (`index.test.jsx`); Vitest discovers them
+  automatically.
+- Suites are **fully offline** — never assert on the network.
+- Tests are **order-independent**: no test relies on state left behind by another.
+
+When a data layer arrives, canned responses go under `src/test/fixtures/` and the global
+`fetch` is mocked per test — the same pattern used by [graphql-goodreads](https://github.com/daniel-castilho/graphql-goodreads).
 
 ## Security Posture
 
@@ -136,7 +149,8 @@ deterministic.
 - Netflix-style header + footer UI composed of styled-components, PT-BR copy.
 - **Toolchain: Vite 7 + Vitest 3** (migrated from the EOL Create React App), React 18,
   testing-library 14.
-- Smoke tests + GitHub Actions CI (install → test → build → audit gate) on Node 24.
+- Component-level tests for every styled-component primitive + App composition smoke test
+  (10 tests, 7 suites), GitHub Actions CI (install → test → build → audit gate) on Node 24.
 - `npm audit` at **0 vulnerabilities** (from 217, 17 critical, at the start of this effort).
 
 ## Roadmap
@@ -144,6 +158,5 @@ deterministic.
 Deliberately not implemented yet (candidate backlog):
 
 - Expand the UI: video carousel/grid, detail cards, routing (React Router).
-- Component-level tests (per component, not just the App smoke test).
 - GitHub Pages (or similar) deployment of the static bundle via CI.
 - Product-consistency pass on accessibility (semantic HTML, focus states, alt text).
